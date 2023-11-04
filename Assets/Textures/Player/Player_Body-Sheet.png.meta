@@ -189,7 +189,7 @@ TextureImporter:
       name: Player_Body-Sheet_4
       rect:
         serializedVersion: 2
-        x: 40
+        x: 30
         y: 0
         width: 10
         height: 10

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class Util
 {
@@ -44,5 +45,9 @@ public static class Util
             finalText += text[i];
         }
         return finalText;
+    }
+    public static void SetAlpha(this Image image, float opacity)
+    {
+        image.color = new Color(image.color.r, image.color.g, image.color.b, opacity);
     }
 }

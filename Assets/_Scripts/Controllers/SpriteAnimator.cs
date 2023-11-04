@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(InputController), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class SpriteAnimator : MonoBehaviour
 {
     /*
@@ -12,7 +12,7 @@ public class SpriteAnimator : MonoBehaviour
      */
     public enum Action
     {
-        Idle, Run, Jump, Fall
+        Idle, Run, Jump, Jump_Straight, Jump_Move, Fall, Fall_Straight, Fall_Move
     }
 
     private Animator animator;
@@ -23,10 +23,14 @@ public class SpriteAnimator : MonoBehaviour
 
     private Action action;
 
+    [SerializeField] private bool isJumpDynamic;
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
-        inputController = GetComponent<InputController>();
+        if (!(inputController = GetComponent<InputController>()))
+        {
+            inputController = transform.parent.GetComponent<InputController>();
+        }
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         action = Action.Idle;
@@ -64,10 +68,32 @@ public class SpriteAnimator : MonoBehaviour
         if (inputController.isFalling)
         {
             action = Action.Fall;
+            if (isJumpDynamic)
+            {
+                if (inputController.horizontalInput != 0)
+                {
+                    action = Action.Fall_Move;
+                }
+                else
+                {
+                    action = Action.Fall_Straight;
+                }
+            }
         }
         else if (inputController.isJumping)
         {
             action = Action.Jump;
+            if (isJumpDynamic)
+            {
+                if (inputController.horizontalInput != 0)
+                {
+                    action = Action.Jump_Move;
+                }
+                else
+                {
+                    action = Action.Jump_Straight;
+                }
+            }
         }
         else if (inputController.horizontalInput != 0)
         {
