@@ -38,19 +38,21 @@ public class SpriteAnimator : MonoBehaviour
 
     void Update()
     {
-        if (inputController.canAct)
+        if (GameManager.isGameActive)
         {
-            DirectionUpdate();
-            ActionUpdate();
+            if (inputController.canAct)
+            {
+                DirectionUpdate();
+                ActionUpdate();
+            }
+
+            string animation = spriteName + "_" + action;
+
+            if (animator.HasState(0, Animator.StringToHash(animation)))
+            {
+                animator.Play("Base Layer." + animation);
+            }
         }
-
-        string animation = spriteName + "_" + action;
-
-        if (animator.HasState(0, Animator.StringToHash(animation)))
-        {
-            animator.Play("Base Layer." + animation);
-        }
-
     }
     protected virtual void DirectionUpdate()
     {

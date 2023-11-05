@@ -12,10 +12,10 @@ public class InputController : MonoBehaviour
     public float horizontalInput { get; private set; }
     public bool doJump { get; private set; }
     public bool isJumpHeld { get; private set; }
-    public bool isFalling;
-    public bool isJumping;
+    [HideInInspector] public bool isFalling;
+    [HideInInspector] public bool isJumping;
 
-    [SerializeField] private InputType type;
+    [SerializeField] private InputType inputType;
 
     [SerializeField] private string controlsPrefix; // For example: "Player 1" for "Player 1 Horizontal" movement,
                                                     // usually for local multiplayer
@@ -35,7 +35,7 @@ public class InputController : MonoBehaviour
         horizontalInput = 0;
         if (canAct)
         {
-            if (type == InputType.User)
+            if (inputType == InputType.User)
             {
                 if (InputManager.GetButton("Move Left"))
                 {

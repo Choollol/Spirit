@@ -10,85 +10,54 @@ using UnityEditor;
 
 public class InputManager : MonoBehaviour
 {
-    public List<string> controlNames = new List<string>();
-    public List<string> controlButtons = new List<string>();
-    private static Dictionary<string, KeyCode> controls = new Dictionary<string, KeyCode>();
+    [SerializeField] private ControlScheme controlScheme;
+    private static Dictionary<string, List<KeyCode>> controls = new Dictionary<string, List<KeyCode>>();
     private void Awake()
     {
-        for (int i = 0; i < controlNames.Count; i++)
+        for (int i = 0; i < controlScheme.controlNames.Count; i++)
         {
-            if (controlButtons[i] == "up" || controlButtons[i] == "down" ||
-                controlButtons[i] == "left" || controlButtons[i] == "right")
+            if (controlScheme.controlButtons[i] == "up" || controlScheme.controlButtons[i] == "down" ||
+                controlScheme.controlButtons[i] == "left" || controlScheme.controlButtons[i] == "right")
             {
-                controlButtons[i] += "arrow";
+                controlScheme.controlButtons[i] += "arrow";
             }
-            controls.Add(controlNames[i], (KeyCode)Enum.Parse(typeof(KeyCode), controlButtons[i], true));
+            if (controlScheme.altControlButtons[i] == "up" || controlScheme.altControlButtons[i] == "down" ||
+                controlScheme.altControlButtons[i] == "left" || controlScheme.altControlButtons[i] == "right")
+            {
+                controlScheme.altControlButtons[i] += "arrow";
+            }
+            List<KeyCode> keysList = new List<KeyCode>();
+            if (controlScheme.controlButtons[i] != "")
+            {
+                keysList.Add((KeyCode)Enum.Parse(typeof(KeyCode), controlScheme.controlButtons[i], true));
+            }
+            if (controlScheme.altControlButtons[i] != "")
+            {
+                keysList.Add((KeyCode)Enum.Parse(typeof(KeyCode), controlScheme.altControlButtons[i], true));
+            }
+            controls.Add(controlScheme.controlNames[i], keysList);
         }
-    }
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
     }
     public static bool GetButtonDown(string name)
     {
-        return Input.GetKeyDown(controls[name]);
+        foreach (KeyCode key in controls[name])
+        {
+            if (Input.GetKeyDown(key))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     public static bool GetButton(string name)
     {
-        return Input.GetKey(controls[name]);
+        foreach (KeyCode key in controls[name])
+        {
+            if (Input.GetKey(key))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(InputManager))]
-class InputManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        var inputManager = (InputManager)target;
-        if (inputManager == null) { return; }
-        Undo.RecordObject(inputManager, "Undo Input Manager");
-
-        int defaultLabelFontSize = GUI.skin.label.fontSize;
-
-        GUI.skin.label.fontSize = 16;
-        GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        GUILayout.Label("Controls", GUILayout.Height(30));
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-
-        GUI.skin.label.fontSize = defaultLabelFontSize;
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Name", GUILayout.Height(20));
-        GUILayout.FlexibleSpace();
-        GUILayout.Label("Button", GUILayout.Height(20), GUILayout.Width(150));
-        //GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-
-        for (int i = 0; i < inputManager.controlNames.Count; i++)
-        {
-            GUILayout.BeginHorizontal();
-            inputManager.controlNames[i] = GUILayout.TextField(inputManager.controlNames[i], GUILayout.MaxWidth(Screen.width / 3));
-            GUILayout.FlexibleSpace();
-            inputManager.controlButtons[i] = GUILayout.TextField(inputManager.controlButtons[i], GUILayout.MaxWidth(Screen.width / 3));
-            GUILayout.EndHorizontal();
-        }
-        if (GUILayout.Button("Add Control"))
-        {
-            inputManager.controlNames.Add("");
-            inputManager.controlButtons.Add("");
-        }
-        if (GUILayout.Button("Delete Control"))
-        {
-            inputManager.controlNames.RemoveAt(inputManager.controlNames.Count - 1);
-            inputManager.controlButtons.RemoveAt(inputManager.controlButtons.Count - 1);
-        }
-    }
-}
-#endif

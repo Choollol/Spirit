@@ -620,8 +620,9 @@ MonoBehaviour:
   groundLayers:
   - serializedVersion: 2
     m_Bits: 64
-  jumpForce: 12
-  speed: 10
+  jumpForce: 0
+  speed: 0
+  data: {fileID: 11400000, guid: 2c54ebd2621648d4a9324f631705b7ba, type: 2}
 --- !u!114 &556768934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFalling: 0
   isJumping: 0
-  type: 1
+  inputType: 1
   controlsPrefix: 
 --- !u!1 &767881603
 GameObject:

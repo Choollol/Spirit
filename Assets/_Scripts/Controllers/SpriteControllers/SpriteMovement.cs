@@ -2,65 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(InputController))]
-
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(InputController))]
+public class SpriteMovement : MonoBehaviour
 {
     /*
-     * Requires child "Ground Check" object at feet/bottom of player object
-     * Create layer named "Ground" and add to groundLayers and objects player can jump off of
+     * Requires child "Ground Check" object at feet/bottom of object
+     * Create layer named "Ground" and add to groundLayers and objects sprite can jump off of
      * Default paramters: 1 mass, 3 gravity, 12 jump force, 10 speed
      */
 
-    private Rigidbody2D rb;
-    private InputController inputController;
+    protected Rigidbody2D rb;
+    protected InputController inputController;
 
-    private Transform groundCheck;
-    [SerializeField] private List<LayerMask> groundLayers;
+    protected Transform groundCheck;
+    [SerializeField] protected List<LayerMask> groundLayers;
 
-    [SerializeField] private float jumpForce;
+    [SerializeField] protected float jumpForce;
 
-    private bool isGrounded;
-    private bool isJumping;
+    protected bool isGrounded;
 
-    private float jumpCounter = 0;
+    protected float jumpTimeCounter = 0;
 
-    private int extraJumps = 0;
-    private int extraJumpsCounter = 0;
-    private float coyoteTime = 0.06f;
-    private float coyoteTimeCounter = 0;
-    private float jumpBuffer = 0.1f;
-    private float jumpBufferCounter = 0;
+    protected float minJumpTime = 0.08f;
+    protected float minJumpTimeCounter = 0;
 
-    private Vector2 velocity;
+    protected int extraJumps = 0;
+    protected int extraJumpsCounter = 0;
 
-    [SerializeField] private float speed;
+    protected float coyoteTime = 0.06f;
+    protected float coyoteTimeCounter = 0;
+    protected float jumpBuffer = 0.1f;
+    protected float jumpBufferCounter = 0;
 
-    private Vector2 additionalForce;
-    private Vector2 additionalForceDecrement;
-    void Start()
+    protected Vector2 velocity;
+
+    [SerializeField] protected float speed;
+
+    protected Vector2 additionalForce;
+    protected Vector2 additionalForceDecrement;
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<InputController>();
 
         groundCheck = transform.GetChild(0);
-
-        CameraController.Instance.SetTarget(gameObject);
     }
+
     private void FixedUpdate()
     {
-        MovementUpdate();
+        if (GameManager.isGameActive)
+        {
+            MovementUpdate();
+        }
     }
     void Update()
     {
-        JumpUpdate();
-
-        if (rb.velocity.y < 0 && !isGrounded)
+        if (GameManager.isGameActive)
         {
-            inputController.isFalling = true;
-        }
+            JumpUpdate();
 
-        additionalForce -= additionalForceDecrement;
+            if (!isGrounded && rb.velocity.y < 0)
+            {
+                inputController.isFalling = true;
+            }
+
+            additionalForce -= additionalForceDecrement;
+        }
     }
     private void MovementUpdate()
     {
@@ -93,12 +100,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        if (coyoteTimeCounter > 0 && jumpBufferCounter > 0 && (!isJumping || jumpCounter > 0.01f))
+        if (coyoteTimeCounter > 0 && jumpBufferCounter > 0 && (!inputController.isJumping || jumpTimeCounter > 0.01f))
         {
             // Jump counter to prevent multiple jump button forces
-            if (isJumping)
+            if (inputController.isJumping)
             {
-                jumpCounter += dt;
+                jumpTimeCounter += dt;
             }
 
             if (rb.velocity.y < 0)
@@ -112,18 +119,23 @@ public class PlayerMovement : MonoBehaviour
                 extraJumpsCounter++;
             }
             isGrounded = false;
-            isJumping = true;
+            inputController.isJumping = true;
+            inputController.isFalling = false;
             //AudioManager.PlaySound("Jump Sound");
-            jumpCounter = 0;
+            jumpTimeCounter = 0;
+            minJumpTimeCounter = 0;
         }
         // Variable jump height
-        if (!inputController.isJumpHeld && rb.velocity.y > 0)
+        if (!inputController.isJumpHeld && rb.velocity.y > 0 && minJumpTimeCounter > minJumpTime)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.96f);
 
             coyoteTimeCounter = 0;
         }
-        inputController.isJumping = isJumping;
+        if (inputController.isJumping)
+        {
+            minJumpTimeCounter += dt;
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -134,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 isGrounded = true;
                 extraJumpsCounter = 0;
-                isJumping = false;
+                inputController.isJumping = false;
                 inputController.isFalling = false;
             }
         }

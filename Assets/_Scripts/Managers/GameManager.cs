@@ -24,16 +24,17 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-
+        isGameActive = true;
     }
 
     void Update()
     {
         if (InputManager.GetButtonDown("Cancel"))
         {
-            if (!isMenuOpen)
+            if (isMenuOpen)
             {
                 EventMessenger.TriggerEvent("CloseMenu");
+                isMenuOpen = false;
             }
             if (isGameActive)
             {
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
         Time.timeScale = 0;
         SceneManager.LoadSceneAsync("Pause_Menu", LoadSceneMode.Additive);
+        isMenuOpen = true;
     }
     private static void UnpauseGame()
     {

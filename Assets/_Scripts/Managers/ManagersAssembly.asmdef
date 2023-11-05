@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "MessengersAssembly",
-        "UtilitiesAssembly"
+        "UtilitiesAssembly",
+        "ScriptableObjectsAssembly"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

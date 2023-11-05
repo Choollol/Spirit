@@ -389,16 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676ee673efdcb544c9f3cd06237c1bd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlNames:
-  - Move Left
-  - Move Right
-  - Jump
-  - Cancel
-  controlButtons:
-  - a
-  - d
-  - w
-  - escape
+  controlScheme: {fileID: 11400000, guid: a5430f2ae8f99d348975fbb21f8cf960, type: 2}
 --- !u!1 &1861618089
 GameObject:
   m_ObjectHideFlags: 0
