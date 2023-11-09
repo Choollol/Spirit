@@ -46,8 +46,28 @@ public static class Util
         }
         return finalText;
     }
+    public static string ToCamelCase(this string text)
+    {
+        string finalText = "";
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (i == 0)
+            {
+                finalText += Char.ToLower(text[0]);
+            }
+            else if (text[i] != ' ')
+            {
+                finalText += text[i];
+            }
+        }
+        return finalText;
+    }
     public static void SetAlpha(this Image image, float opacity)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, opacity);
+    }
+    public static KeyCode ToKeyCode(string s)
+    {
+        return (KeyCode)Enum.Parse(typeof(KeyCode), s, true);
     }
 }

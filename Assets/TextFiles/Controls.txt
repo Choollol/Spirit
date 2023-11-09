@@ -1,0 +1,15 @@
+Cancel
+Escape
+*
+Move Left
+A
+LeftArrow
+*
+Move Right
+D
+RightArrow
+*
+Jump
+W
+UpArrow
+*

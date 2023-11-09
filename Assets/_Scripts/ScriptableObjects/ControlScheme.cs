@@ -8,7 +8,7 @@ public class ControlScheme : ScriptableObject
 {
     public List<string> controlNames = new List<string>();
     public List<string> controlButtons = new List<string>();
-    public List<string> altControlButtons = new List<string>();
+    public List<string> controlAltButtons = new List<string>();
 }
 
 #if UNITY_EDITOR
@@ -51,8 +51,8 @@ class ControlSchemeEditor : Editor
             controlScheme.controlButtons[i] =
                 GUILayout.TextField(controlScheme.controlButtons[i], GUILayout.Width(controlTextFieldWidth));
             GUILayout.FlexibleSpace();
-            controlScheme.altControlButtons[i] =
-                    GUILayout.TextField(controlScheme.altControlButtons[i], GUILayout.Width(controlTextFieldWidth));
+            controlScheme.controlAltButtons[i] =
+                    GUILayout.TextField(controlScheme.controlAltButtons[i], GUILayout.Width(controlTextFieldWidth));
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("^"))
             {
@@ -60,7 +60,7 @@ class ControlSchemeEditor : Editor
                 {
                     Swap(ref controlScheme.controlNames, i, i - 1);
                     Swap(ref controlScheme.controlButtons, i, i - 1);
-                    Swap(ref controlScheme.altControlButtons, i, i - 1);
+                    Swap(ref controlScheme.controlAltButtons, i, i - 1);
                 }
             }
             if (GUILayout.Button("v"))
@@ -69,20 +69,20 @@ class ControlSchemeEditor : Editor
                 {
                     Swap(ref controlScheme.controlNames, i, i + 1);
                     Swap(ref controlScheme.controlButtons, i, i + 1);
-                    Swap(ref controlScheme.altControlButtons, i, i + 1);
+                    Swap(ref controlScheme.controlAltButtons, i, i + 1);
                 }
             }
             if (GUILayout.Button("+"))
             {
                 controlScheme.controlNames.Insert(i + 1, "");
                 controlScheme.controlButtons.Insert(i + 1, "");
-                controlScheme.altControlButtons.Insert(i, "");
+                controlScheme.controlAltButtons.Insert(i, "");
             }
             if (GUILayout.Button("-"))
             {
                 controlScheme.controlNames.RemoveAt(i);
                 controlScheme.controlButtons.RemoveAt(i);
-                controlScheme.altControlButtons.RemoveAt(i);
+                controlScheme.controlAltButtons.RemoveAt(i);
             }
             GUILayout.EndHorizontal();
         }
@@ -90,13 +90,13 @@ class ControlSchemeEditor : Editor
         {
             controlScheme.controlNames.Add("");
             controlScheme.controlButtons.Add("");
-            controlScheme.altControlButtons.Add("");
+            controlScheme.controlAltButtons.Add("");
         }
         if (GUILayout.Button("Delete Control"))
         {
             controlScheme.controlNames.RemoveAt(controlScheme.controlNames.Count - 1);
             controlScheme.controlButtons.RemoveAt(controlScheme.controlButtons.Count - 1);
-            controlScheme.altControlButtons.RemoveAt(controlScheme.altControlButtons.Count - 1);
+            controlScheme.controlAltButtons.RemoveAt(controlScheme.controlAltButtons.Count - 1);
         }
     }
     private void Swap(ref List<string> list, int index1, int index2)

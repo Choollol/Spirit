@@ -37,13 +37,16 @@ public class InputController : MonoBehaviour
         {
             if (inputType == InputType.User)
             {
-                if (InputManager.GetButton("Move Left"))
+                if (!InputManager.GetButton("Move Left") || !InputManager.GetButton("Move Right"))
                 {
-                    horizontalInput = -1;
-                }
-                else if (InputManager.GetButton("Move Right"))
-                {
-                    horizontalInput = 1;
+                    if (InputManager.GetButton("Move Left"))
+                    {
+                        horizontalInput = -1;
+                    }
+                    else if (InputManager.GetButton("Move Right"))
+                    {
+                        horizontalInput = 1;
+                    }
                 }
                 doJump = InputManager.GetButtonDown(controlsPrefix + "Jump");
                 isJumpHeld = InputManager.GetButton(controlsPrefix + "Jump");

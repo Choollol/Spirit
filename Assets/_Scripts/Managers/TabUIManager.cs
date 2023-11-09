@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class TabUIManager : MonoBehaviour
 {
-    private static UIManager instance;
-    public static UIManager Instance
+    private static TabUIManager instance;
+    public static TabUIManager Instance
     {
         get { return instance; }
     }
@@ -41,17 +41,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         SwitchUI(uiList[0].name);
-    }
-    private void Update()
-    {
-        if (InputManager.GetButtonDown("Move Left"))
-        {
-            SwitchUI("UI 1");
-        }
-        else if (InputManager.GetButtonDown("Move Right"))
-        {
-            SwitchUI("UI 2");
-        }
     }
     public void ClearUI()
     {
