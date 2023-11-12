@@ -13,3 +13,6 @@ Jump
 W
 UpArrow
 *
+Interact
+F
+*

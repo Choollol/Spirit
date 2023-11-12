@@ -6,6 +6,7 @@ public class ControlTextSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject controlTextHolder;
     [SerializeField] private GameObject controlTextPrefab;
+    [SerializeField] private GameObject content;
     void Start()
     {
         foreach (var control in InputManager.Controls)
@@ -16,6 +17,9 @@ public class ControlTextSpawner : MonoBehaviour
             {
                 controlText.transform.GetChild(i).GetComponent<ControlText>().SetControlText();
             }
+            RectTransform contentRect = content.GetComponent<RectTransform>();
+            content.GetComponent<RectTransform>().sizeDelta = new Vector2(contentRect.sizeDelta.x, contentRect.sizeDelta.y + 
+                controlText.GetComponent<RectTransform>().sizeDelta.y);
         }
     }
 

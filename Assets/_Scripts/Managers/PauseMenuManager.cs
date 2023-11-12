@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class PauseMenuManager : MonoBehaviour
 {
     private static PauseMenuManager instance;
@@ -13,6 +12,8 @@ public class PauseMenuManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> objectList;
     private Dictionary<string, GameObject> objectDict = new Dictionary<string, GameObject>();
+
+    private List<Image> controlButtonImages = new List<Image>();
 
     private void Awake()
     {
@@ -31,30 +32,12 @@ public class PauseMenuManager : MonoBehaviour
         {
             objectDict.Add(obj.name.ToCamelCase(), obj);
         }
-    }
-
-    void Update()
-    {
-        /*if (InputManager.GetButtonDown("Cancel"))
+        controlButtonImages.Add(objectDict["controlButtons"].GetComponent<Image>());
+        for (int i = 0; i < objectDict["controlButtons"].transform.childCount; i++)
         {
-            if (objectDict["controlsKeyWindow"].activeSelf)
-            {
-                objectDict["controlsKeyWindow"].SetActive(false);
-            }
-            else if (objectDict["editControlWindow"].activeSelf)
-            {
-                CloseControlSwitchWindow();
-            }
-        }*/
+            controlButtonImages.Add(objectDict["controlButtons"].transform.GetChild(i).GetComponent<Image>());
+        }
     }
-    /*public void SwitchControl()
-    {
-        TMP_InputField inputField = objectDict["input"].GetComponent<TMP_InputField>();
-        controlToEditData.strings[1] = inputField.text;
-        controlToEditData.bools[0] = true;
-        inputField.text = "";
-        CloseControlSwitchWindow();
-    }*/
     public void InvalidButtonEntered()
     {
         objectDict["invalidEntryText"].SetActive(true);
@@ -66,6 +49,8 @@ public class PauseMenuManager : MonoBehaviour
     public void EditControl()
     {
         objectDict["enterControlText"].SetActive(true);
+        objectDict["currentlyEditingText"].GetComponent<TextMeshProUGUI>().text = "Currently editing:\n" + 
+            controlToEditData.strings[0] + ", " + (!controlToEditData.bools[1] ? "Main button" : "Alternate button");
         controlToEditData.bools[0] = true;
         GameManager.doCloseMenuOnCancel = false;
     }
@@ -90,19 +75,21 @@ public class PauseMenuManager : MonoBehaviour
     {
         objectDict["controlButtons"].SetActive(false);
     }
-    /*public void OpenControlSwitchWindow()
+    private void OnGUI()
     {
-        objectDict["editControlWindow"].SetActive(true);
-        GameManager.doCloseMenuOnCancel = false;
-        objectDict["invalidEntryText"].SetActive(false);
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            foreach (Image image in controlButtonImages)
+            {
+                image.raycastTarget = false;
+            }
+        }
+        else
+        {
+            foreach (Image image in controlButtonImages)
+            {
+                image.raycastTarget = true;
+            }
+        }
     }
-    private void CloseControlSwitchWindow()
-    {
-        objectDict["editControlWindow"].SetActive(false);
-        CanCloseMenuOnCancel();
-    }
-    public void OpenControlsKeyWindow()
-    {
-        objectDict["controlsKeyWindow"].SetActive(true);
-    }*/
 }

@@ -142,7 +142,7 @@ public class SpriteMovement : MonoBehaviour
         // Grounded
         foreach (LayerMask groundLayer in groundLayers)
         {
-            if (1 << collision.gameObject.layer == groundLayer && collision.transform.position.y < groundCheck.position.y)
+            if (1 << collision.gameObject.layer == groundLayer && collision.transform.position.y < groundCheck.position.y + 0.01f)
             {
                 isGrounded = true;
                 extraJumpsCounter = 0;

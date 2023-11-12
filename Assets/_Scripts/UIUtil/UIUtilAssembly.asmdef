@@ -1,8 +1,9 @@
 {
-    "name": "UtilitiesAssembly",
+    "name": "UIUtilAssembly",
     "rootNamespace": "",
     "references": [
-        "GUID:7b69fef31c0cbf14f94ebaa26991f60a"
+        "GUID:7b69fef31c0cbf14f94ebaa26991f60a",
+        "GUID:72ba7d05f16bb5f4891169f5dcfa974e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

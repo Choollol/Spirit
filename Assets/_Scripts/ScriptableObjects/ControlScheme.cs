@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ControlScheme", menuName = "ScriptableObjects/ControlScheme", order = 1)]
+//[CreateAssetMenu(fileName = "ControlScheme", menuName = "ScriptableObjects/ControlScheme", order = 1)]
 public class ControlScheme : ScriptableObject
 {
     public List<string> controlNames = new List<string>();

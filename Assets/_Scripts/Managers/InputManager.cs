@@ -23,7 +23,6 @@ public class InputManager : MonoBehaviour
 
     private int buttonToSwitch; // 0 for main control button, 1 for alternate control
 
-    private static string path = "Assets/TextFiles/Controls.txt";
     [SerializeField] private TextAsset controlsFile;
     private List<string> controlsText = new List<string>();
 
@@ -40,14 +39,19 @@ public class InputManager : MonoBehaviour
             instance = this;
         }
 
-        Load();
+        //LoadDefaultControls();
     }
-    private void Update()
+    public static void SetControls(List<string> names, List<string> buttons, List<string> altButtons)
     {
-        /*if (controlToEditData.bools[0])
+        for (int i = 0; i < names.Count; i++)
         {
-            SwitchControl(controlToEditData.strings[0], controlToEditData.strings[1], controlToEditData.bools[1]);
-        }*/
+            List<KeyCode> keysList = new List<KeyCode>()
+            {
+                Util.ToKeyCode(buttons[i]),
+                Util.ToKeyCode(altButtons[i])
+            };
+            controls.Add(names[i], new List<KeyCode>() { Util.ToKeyCode(buttons[i]), Util.ToKeyCode(altButtons[i]) });
+        }
     }
     public void SwitchControl(string name, string button, bool isAlt)
     {
@@ -94,7 +98,7 @@ public class InputManager : MonoBehaviour
         }
         return false;
     }
-    public static void Save()
+    /*public static void Save()
     {
         StreamWriter writer = new StreamWriter(path, false);
 
@@ -108,19 +112,8 @@ public class InputManager : MonoBehaviour
             writer.WriteLine(text + "*");
         }
         writer.Close();
-
-        /*controlScheme.controlNames = new List<string>();
-        controlScheme.controlNames = new List<string>();
-        controlScheme.controlNames = new List<string>();
-
-        foreach (var control in controls)
-        {
-            controlScheme.controlNames.Add(control.Key);
-            controlScheme.controlButtons.Add(control.Value[0].ToString());
-            controlScheme.controlAltButtons.Add(control.Value[1].ToString());
-        }*/
-    }
-    private void Load()
+    }*/
+    public void LoadDefaultControls()
     {
         string[] temp = controlsFile.text.Trim().Split('*');
         for (int i = 0; i < temp.Length; i++)
@@ -147,37 +140,17 @@ public class InputManager : MonoBehaviour
 
             controls.Add(parts[0].Trim(), keysList);
         }
-
-        /*for (int i = 0; i < controlScheme.controlNames.Count; i++)
-        {
-            if (controlScheme.controlButtons[i] == "up" || controlScheme.controlButtons[i] == "down" ||
-                controlScheme.controlButtons[i] == "left" || controlScheme.controlButtons[i] == "right")
-            {
-                controlScheme.controlButtons[i] += "arrow";
-            }
-            if (controlScheme.controlAltButtons[i] == "up" || controlScheme.controlAltButtons[i] == "down" ||
-                controlScheme.controlAltButtons[i] == "left" || controlScheme.controlAltButtons[i] == "right")
-            {
-                controlScheme.controlAltButtons[i] += "arrow";
-            }
-            List<KeyCode> keysList = new List<KeyCode>();
-            if (controlScheme.controlButtons[i] != "")
-            {
-                keysList.Add(Util.ToKeyCode(controlScheme.controlButtons[i]));
-            }
-            if (controlScheme.controlAltButtons[i] != "")
-            {
-                keysList.Add(Util.ToKeyCode(controlScheme.controlAltButtons[i]));
-            }
-            controls.Add(controlScheme.controlNames[i], keysList);
-        }*/
     }
     private void OnGUI()
     {
         if (controlToEditData.bools[0] && Event.current.keyCode.ToString() != "None")
         {
-            SwitchControl(controlToEditData.strings[0], Event.current.keyCode.ToString(), controlToEditData.bools[1]);
+            if (!GetButtonDown("Cancel"))
+            {
+                SwitchControl(controlToEditData.strings[0], Event.current.keyCode.ToString(), controlToEditData.bools[1]);
+            }
             PauseMenuManager.Instance.ControlEdited();
+            controlToEditData.bools[0] = false;
         }
     }
 }

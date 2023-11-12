@@ -1,8 +1,8 @@
 {
-    "name": "UtilitiesAssembly",
+    "name": "SaveSystemAssembly",
     "rootNamespace": "",
     "references": [
-        "GUID:7b69fef31c0cbf14f94ebaa26991f60a"
+        "GUID:b580675e5253a8645a9a49297cb14295"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

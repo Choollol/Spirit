@@ -64,6 +64,7 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
                     {
                         text.text = InputManager.Controls[controlName][0].ToString();
                     }
+                    DeleteExtraneousText();
                     break;
                 }
             case ControlType.AltButton:
@@ -76,21 +77,41 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
                     {
                         text.text = InputManager.Controls[controlName][1].ToString();
                     }
+                    DeleteExtraneousText();
                     break;
                 }
         }
-        DeleteExtraneousText();
     }
     private void DeleteExtraneousText()
     {
         string s = text.text.ToLower();
         if (s.Contains("arrow"))
         {
-            text.text = text.text.Substring(0, text.text.Length - 5);
+            text.text = text.text.Substring(0, text.text.Length - "arrow".Length);
         }
         else if (s.Contains("alpha"))
         {
             text.text = text.text.Substring(text.text.Length - 1, 1);
+        }
+        else if (s.Contains("left") && s != "left")//s.Contains("bracket"))
+        {
+            text.text = text.text[0] + text.text.Substring(4);
+        }
+        else if (s.Contains("right") && s != "right")
+        {
+            text.text = text.text[0] + text.text.Substring(5);
+        }
+        else if (s == "backquote")
+        {
+            text.text = "Backtick";
+        }
+        else if (s == "semicolon")
+        {
+            text.text = "SemiCol";
+        }
+        else if (s == "backslash")
+        {
+            text.text = "BSlash";
         }
     }
     public void OnPointerEnter(PointerEventData data)

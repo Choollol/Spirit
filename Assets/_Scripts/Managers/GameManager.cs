@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
-    public static bool isGameActive { get; private set; }
+    public static bool isGameActive { get; private set; } // Whether game is paused or not
     private static bool isMenuOpen;
-    public static bool doCloseMenuOnCancel;
+    public static bool doCloseMenuOnCancel = true;
     private static bool isInTransition;
     private static bool isInWorld;
     private void Awake()
@@ -36,14 +36,14 @@ public class GameManager : MonoBehaviour
             {
                 EventMessenger.TriggerEvent("CloseMenu");
                 isMenuOpen = false;
+                if (!isGameActive)
+                {
+                    UnpauseGame();
+                }
             }
-            if (isGameActive)
+            else if (isGameActive)
             {
                 PauseGame();
-            }
-            else if (doCloseMenuOnCancel)
-            {
-                UnpauseGame();
             }
         }
     }
