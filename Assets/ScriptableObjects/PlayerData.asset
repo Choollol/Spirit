@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: add4a8157e5e2fa45809746a0966bbb5, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  jumpForce: 12
-  speed: 10
-  spriteName: Player
+  jumpForce: 3.6
+  speed: 2

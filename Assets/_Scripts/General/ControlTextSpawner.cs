@@ -18,9 +18,9 @@ public class ControlTextSpawner : MonoBehaviour
                 controlText.transform.GetChild(i).GetComponent<ControlText>().SetControlText();
             }
             RectTransform contentRect = content.GetComponent<RectTransform>();
-            content.GetComponent<RectTransform>().sizeDelta = new Vector2(contentRect.sizeDelta.x, contentRect.sizeDelta.y + 
-                controlText.GetComponent<RectTransform>().sizeDelta.y);
+            content.GetComponent<RectTransform>().sizeDelta += new Vector2(0, controlText.GetComponent<RectTransform>().sizeDelta.y);
         }
+        content.GetComponent<RectTransform>().sizeDelta += new Vector2(0, 20);
     }
 
     void Update()

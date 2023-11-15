@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
+
+    public bool IsGameActive;
     public static bool isGameActive { get; private set; } // Whether game is paused or not
     private static bool isMenuOpen;
     public static bool doCloseMenuOnCancel = true;
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        //isGameActive = true;
+        isGameActive = IsGameActive;
     }
 
     void Update()

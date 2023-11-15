@@ -37,10 +37,8 @@ public class PauseMenuManager : MonoBehaviour
         {
             controlButtonImages.Add(objectDict["controlButtons"].transform.GetChild(i).GetComponent<Image>());
         }
-    }
-    public void InvalidButtonEntered()
-    {
-        objectDict["invalidEntryText"].SetActive(true);
+
+        EventMessenger.TriggerEvent("UpdateVolumeSliders");
     }
     public void DeleteControl()
     {

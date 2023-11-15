@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
@@ -13,6 +14,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float[] bounds = new float[4]; //Left, Right, Bottom, Top
 
     private GameObject target;
+
+    private PixelPerfectCamera ppCamera;
 
     private float width
     {
@@ -36,6 +39,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         mainCamera = GetComponent<Camera>();
+        ppCamera = GetComponent<PixelPerfectCamera>();
     }
 
     void LateUpdate()
@@ -48,19 +52,19 @@ public class CameraController : MonoBehaviour
     {
         if (transform.position.x - width / 2 < bounds[0])
         {
-            transform.SetX(bounds[0] + width / 2);
+            transform.SetPosX(bounds[0] + width / 2);
         }
         else if (transform.position.x + width / 2 > bounds[1])
         {
-            transform.SetX(bounds[1] - width / 2);
+            transform.SetPosX(bounds[1] - width / 2);
         }
         if (transform.position.y - height / 2 < bounds[2])
         {
-            transform.SetY(bounds[2] + height / 2);
+            transform.SetPosY(bounds[2] + height / 2);
         }
         else if (transform.position.y + height / 2 > bounds[3])
         {
-            transform.SetY(bounds[3] - height / 2);
+            transform.SetPosY(bounds[3] - height / 2);
         }
     }
     public void SetBounds(float[] newBounds)

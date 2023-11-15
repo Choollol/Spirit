@@ -9,13 +9,21 @@ public static class Util
     {
         transform.position = new Vector3(position.x, position.y, transform.position.z);
     }
-    public static void SetX(this Transform transform, float x)
+    public static void SetPosX(this Transform transform, float x)
     {
         transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
-    public static void SetY(this Transform transform, float y)
+    public static void SetPosY(this Transform transform, float y)
     {
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
+    }
+    public static void SetPosX(this RectTransform rectTransform, float x)
+    {
+        rectTransform.localPosition = new Vector3(x, rectTransform.localPosition.y, rectTransform.localPosition.z);
+    }
+    public static void SetPosY(this RectTransform rectTransform, float y)
+    {
+        rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, y, rectTransform.localPosition.z);
     }
     public static Vector3Int ToVector3Int(Vector3 vector3)
     {

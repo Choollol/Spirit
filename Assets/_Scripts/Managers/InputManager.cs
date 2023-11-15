@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
         }
         catch
         {
-            PauseMenuManager.Instance.InvalidButtonEntered();
+            Debug.Log("Invalid control");
         }
         controlToEditData.bools[0] = false;
         string controlType = isAlt ? "AltButton" : "Button";

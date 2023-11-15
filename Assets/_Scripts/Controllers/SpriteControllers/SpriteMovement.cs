@@ -118,7 +118,7 @@ public class SpriteMovement : MonoBehaviour
             {
                 extraJumpsCounter++;
             }
-            isGrounded = false;
+            //isGrounded = false;
             inputController.isJumping = true;
             inputController.isFalling = false;
             //AudioManager.PlaySound("Jump Sound");
@@ -137,12 +137,16 @@ public class SpriteMovement : MonoBehaviour
             minJumpTimeCounter += dt;
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
+        float collisionTopY = collision.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2 *
+                collision.transform.localScale.y;
+
         // Grounded
         foreach (LayerMask groundLayer in groundLayers)
         {
-            if (1 << collision.gameObject.layer == groundLayer && collision.transform.position.y < groundCheck.position.y + 0.01f)
+            if (1 << collision.gameObject.layer == groundLayer && collisionTopY < groundCheck.position.y + 0.01f && 
+                rb.velocity.y <= 0)
             {
                 isGrounded = true;
                 extraJumpsCounter = 0;
@@ -153,10 +157,13 @@ public class SpriteMovement : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
+        float collisionTopY = collision.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2 *
+                collision.transform.localScale.y;
+        
         // Ungrounded
         foreach (LayerMask groundLayer in groundLayers)
         {
-            if (1 << collision.gameObject.layer == groundLayer)
+            if (1 << collision.gameObject.layer == groundLayer && collisionTopY < groundCheck.position.y + 0.01f)
             {
                 isGrounded = false;
             }
