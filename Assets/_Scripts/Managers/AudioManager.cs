@@ -22,13 +22,21 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
+    public static void PlayButtonClick()
+    {
+        sounds["Button Click"].Play();
+    }
     public static void PlaySound(string key)
     {
         sounds[key].Play();
     }
-    public static void PlaySound(string key, float minPitch, float maxPitch)
+    public static void PlaySound(string key, float minPitch, float maxPitch, bool doRoundSemitone = false)
     {
         sounds[key].pitch = Random.Range(minPitch, maxPitch);
+        if (doRoundSemitone)
+        {
+            sounds[key].pitch = Mathf.Pow(1.05946f, (int)Mathf.Log(sounds[key].pitch, 1.05946f));
+        }
         sounds[key].Play();
     }
     public static void StopSound(string key)

@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
     }
+    private void OnEnable()
+    {
+        EventMessenger.StartListening("ExitGame", ExitGame);
+    }
+    private void OnDisable()
+    {
+        EventMessenger.StopListening("ExitGame", ExitGame);
+    }
     void Start()
     {
         isGameActive = IsGameActive;
@@ -76,5 +84,10 @@ public class GameManager : MonoBehaviour
         {
             EventMessenger.TriggerEvent("SetPlayerCanActTrue");
         }
+    }
+    private static void ExitGame()
+    {
+        EventMessenger.TriggerEvent("Save");
+        Application.Quit();
     }
 }

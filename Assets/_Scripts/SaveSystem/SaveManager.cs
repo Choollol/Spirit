@@ -20,6 +20,14 @@ public class SaveManager : MonoBehaviour
     {
         path = Application.persistentDataPath + "/save.json";
     }
+    private void OnEnable()
+    {
+        EventMessenger.StartListening("Save", Save);
+    }
+    private void OnDisable()
+    {
+        EventMessenger.StopListening("Save", Save);
+    }
     private void Start()
     {
         File.Delete(path);

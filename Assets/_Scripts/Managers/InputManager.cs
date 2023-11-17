@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor.VersionControl;
-using UnityEngine.UIElements;
-using Codice.Client.BaseCommands.BranchExplorer;
-using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

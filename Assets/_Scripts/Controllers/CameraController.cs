@@ -16,7 +16,8 @@ public class CameraController : MonoBehaviour
     private GameObject target;
 
     private PixelPerfectCamera ppCamera;
-
+    private int zoomAmountX = 64;
+    private int zoomAmountY = 36;
     private float width
     {
         get { return mainCamera.orthographicSize * mainCamera.aspect * 2; }
@@ -41,12 +42,35 @@ public class CameraController : MonoBehaviour
         mainCamera = GetComponent<Camera>();
         ppCamera = GetComponent<PixelPerfectCamera>();
     }
-
+    private void Update()
+    {
+        /*if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            ZoomIn();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            ZoomOut();
+        }*/
+    }
     void LateUpdate()
     {
-        transform.position = target.transform.position.ToVector2().ToVector3(transform.position.z);
+        if (target)
+        {
+            transform.position = target.transform.position.ToVector2().ToVector3(transform.position.z);
+        }
 
         BoundsUpdate();
+    }
+    private void ZoomIn()
+    {
+        ppCamera.refResolutionX -= zoomAmountX;
+        ppCamera.refResolutionY -= zoomAmountY;
+    }
+    private void ZoomOut()
+    {
+        ppCamera.refResolutionX += zoomAmountX;
+        ppCamera.refResolutionY += zoomAmountY;
     }
     private void BoundsUpdate()
     {

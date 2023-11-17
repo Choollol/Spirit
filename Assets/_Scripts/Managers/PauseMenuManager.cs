@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class PauseMenuManager : MonoBehaviour
 {
     private static PauseMenuManager instance;
@@ -14,6 +15,10 @@ public class PauseMenuManager : MonoBehaviour
     private Dictionary<string, GameObject> objectDict = new Dictionary<string, GameObject>();
 
     private List<Image> controlButtonImages = new List<Image>();
+
+    public Dictionary<string, int> controlButtonAmounts = new Dictionary<string, int>(); // Number of controls using each button
+
+    private GameObject controlButtonsTarget;
 
     private void Awake()
     {
@@ -40,6 +45,42 @@ public class PauseMenuManager : MonoBehaviour
 
         EventMessenger.TriggerEvent("UpdateVolumeSliders");
     }
+    public void ToggleFullscreen()
+    {
+        if (Screen.fullScreenMode == FullScreenMode.FullScreenWindow)
+        {
+            objectDict["fullScreenModeText"].GetComponent<TextMeshProUGUI>().text = "Windowed";
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+        }
+        else
+        {
+            objectDict["fullScreenModeText"].GetComponent<TextMeshProUGUI>().text = "Full Screen";
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        }
+    }
+    public void IncrementButtonAmount(string button)
+    {
+        if (!controlButtonAmounts.ContainsKey(button))
+        {
+            controlButtonAmounts.Add(button, 1);
+        }
+        else
+        {
+            controlButtonAmounts[button]++;
+        }
+    }
+    public void DecrementButtonAmount(string button)
+    {
+        if (!controlButtonAmounts.ContainsKey(button))
+        {
+            controlButtonAmounts.Add(button, 0);
+        }
+        else if (controlButtonAmounts[button] > 0)
+        {
+            controlButtonAmounts[button]--;
+            EventMessenger.TriggerEvent("UpdateColor" + button);
+        }
+    }
     public void DeleteControl()
     {
         InputManager.Instance.SwitchControl(controlToEditData.strings[0], "None", controlToEditData.bools[1]);
@@ -56,22 +97,31 @@ public class PauseMenuManager : MonoBehaviour
     {
         objectDict["enterControlText"].SetActive(false);
         StartCoroutine(HandleCanCloseMenu());
+        AudioManager.PlaySound("Control Edited Sound", 0.6f, 1.5f, true);
     }
     private IEnumerator HandleCanCloseMenu()
     {
         yield return new WaitForEndOfFrame();
         GameManager.doCloseMenuOnCancel = true;
     }
-    public void ShowControlButtons(Vector2 pos, string name, bool isAlt)
+    public void ShowControlButtons(GameObject obj, Vector2 pos, string name, bool isAlt)
     {
         objectDict["controlButtons"].SetActive(true);
         objectDict["controlButtons"].transform.position = pos;
         controlToEditData.strings[0] = name;
         controlToEditData.bools[1] = isAlt;
+        controlButtonsTarget = obj;
     }
     public void HideControlButtons()
     {
         objectDict["controlButtons"].SetActive(false);
+    }
+    public void UpdateControlButtonsPosition()
+    {
+        if (controlButtonsTarget)
+        {
+            objectDict["controlButtons"].transform.position = controlButtonsTarget.transform.position;
+        }
     }
     private void OnGUI()
     {
