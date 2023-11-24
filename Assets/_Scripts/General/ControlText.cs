@@ -58,12 +58,12 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
             case ControlType.Name:
                 {
                     text.text = controlName;
+                    DeleteExtraneousTextName();
                     break;
                 }
             case ControlType.Button:
                 {
                     PauseMenuManager.Instance.DecrementButtonAmount(button);
-                    //EventMessenger.TriggerEvent("UpdateColor" + button);
                     if (InputManager.Controls[controlName][0] == KeyCode.None)
                     {
                         text.text = "";
@@ -75,13 +75,12 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
 
                     UpdateButton(0);
 
-                    DeleteExtraneousText();
+                    DeleteExtraneousTextButton();
                     break;
                 }
             case ControlType.AltButton:
                 {
                     PauseMenuManager.Instance.DecrementButtonAmount(button);
-                    //EventMessenger.TriggerEvent("UpdateColor" + button);
                     if (InputManager.Controls[controlName][1] == KeyCode.None)
                     {
                         text.text = "";
@@ -93,7 +92,7 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
 
                     UpdateButton(1);
 
-                    DeleteExtraneousText();
+                    DeleteExtraneousTextButton();
                     break;
                 }
         }
@@ -118,7 +117,15 @@ public class ControlText : MonoBehaviour, IPointerEnterHandler
             text.color = new Color(0, 0, 0);
         }
     }
-    private void DeleteExtraneousText()
+    private void DeleteExtraneousTextName()
+    {
+        string s = text.text.ToLower();
+        if (s.Contains("attack"))
+        {
+            text.text = text.text.Substring(0, text.text.Length - 6) + "Atk";
+        }
+    }
+    private void DeleteExtraneousTextButton()
     {
         string s = text.text.ToLower();
         if (s.Contains("arrow"))

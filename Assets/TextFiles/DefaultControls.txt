@@ -13,6 +13,15 @@ Jump
 W
 UpArrow
 *
-Interact
-F
+Melee
+J
+C
+*
+Shoot
+K
+X
+*
+Reset
+R
+P
 *

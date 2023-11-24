@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class SpriteAnimator : MonoBehaviour
@@ -12,18 +13,21 @@ public class SpriteAnimator : MonoBehaviour
      */
     public enum Action
     {
-        Idle, Run, Jump, Jump_Straight, Jump_Move, Fall, Fall_Straight, Fall_Move
+        Idle, Run, Jump, Fall, Jump_Straight, Jump_Move, Fall_Straight, Fall_Move, Attack_Melee, Attack_Ranged
     }
 
-    private Animator animator;
-    private InputController inputController;
-    private SpriteRenderer spriteRenderer;
+    protected Animator animator;
+    protected InputController inputController;
+    protected SpriteRenderer spriteRenderer;
 
-    [SerializeField] private string spriteName;
+    [SerializeField] protected string spriteName;
 
-    private Action action;
+    protected Action action;
 
-    [SerializeField] private bool isJumpDynamic;
+    [SerializeField] protected bool isJumpDynamic;
+    [SerializeField] protected bool doesAttack;
+
+    protected bool doPlayAnimations = true;
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -48,11 +52,36 @@ public class SpriteAnimator : MonoBehaviour
 
             string animation = spriteName + "_" + action;
 
-            if (animator.HasState(0, Animator.StringToHash(animation)))
+            if (animator.HasState(0, Animator.StringToHash(animation)) && doPlayAnimations)
             {
                 animator.Play("Base Layer." + animation);
             }
         }
+    }
+    private IEnumerator PlayAttackAnimation()
+    {
+        if (!animator.HasState(0, Animator.StringToHash(spriteName + "_" + action)))
+        {
+            yield break;
+        }
+        animator.Play("Base Layer." + spriteName + "_" + action);
+        StartAttacking();
+        yield return new WaitForEndOfFrame();
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
+            yield return null;
+        }
+        doPlayAnimations = true;
+        EndAttacking();
+        yield break;
+    }
+    protected virtual void StartAttacking()
+    {
+
+    }
+    protected virtual void EndAttacking()
+    {
+
     }
     protected virtual void DirectionUpdate()
     {
@@ -67,7 +96,24 @@ public class SpriteAnimator : MonoBehaviour
     }
     private void ActionUpdate()
     {
-        if (inputController.isFalling)
+        if (!doPlayAnimations)
+        {
+            return;
+        }
+        if (inputController.doAttack && doesAttack)
+        {
+            if (inputController.attackType == 0)
+            {
+                action = Action.Attack_Melee;
+            }
+            else if (inputController.attackType == 1)
+            {
+                action = Action.Attack_Ranged;
+            }
+            doPlayAnimations = false;
+            StartCoroutine(PlayAttackAnimation());
+        }
+        else if (inputController.isFalling)
         {
             action = Action.Fall;
             if (isJumpDynamic)
@@ -82,7 +128,7 @@ public class SpriteAnimator : MonoBehaviour
                 }
             }
         }
-        else if (inputController.isJumping)
+        else if (inputController.isRising)
         {
             action = Action.Jump;
             if (isJumpDynamic)

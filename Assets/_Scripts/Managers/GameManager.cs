@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static bool doCloseMenuOnCancel = true;
     private static bool isInTransition;
     private static bool isInWorld;
+
+    public static GameObject currentPuzzle;
     private void Awake()
     {
         if (instance != null && instance != this)

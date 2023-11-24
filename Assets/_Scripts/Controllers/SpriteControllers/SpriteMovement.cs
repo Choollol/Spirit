@@ -1,3 +1,4 @@
+using PlasticGui.WorkspaceWindow;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class SpriteMovement : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected InputController inputController;
+
+    protected static float inputControllerUpdateVelocityMin = 0.1f;
 
     protected Transform groundCheck;
     [SerializeField] protected List<LayerMask> groundLayers;
@@ -61,9 +64,17 @@ public class SpriteMovement : MonoBehaviour
         {
             JumpUpdate();
 
-            if (!isGrounded && rb.velocity.y < 0)
+            if (!isGrounded && Mathf.Abs(rb.velocity.y) > inputControllerUpdateVelocityMin)
             {
-                inputController.isFalling = true;
+                if (rb.velocity.y < 0)
+                {
+                    inputController.isFalling = true;
+                }
+                else if (rb.velocity.y > 0)
+                {
+                    inputController.isRising = true;
+                    inputController.isFalling = false;
+                }
             }
 
             additionalForce -= additionalForceDecrement;
@@ -100,33 +111,25 @@ public class SpriteMovement : MonoBehaviour
         }
 
         // Jump
-        if (coyoteTimeCounter > 0 && jumpBufferCounter > 0 && (!inputController.isJumping || jumpTimeCounter > 0.01f))
+        if (coyoteTimeCounter > 0 && jumpBufferCounter > 0 && (!inputController.isJumping || jumpTimeCounter > 0.1f))
         {
-            // Jump counter to prevent multiple jump button forces
-            if (inputController.isJumping)
-            {
-                jumpTimeCounter += dt;
-            }
-
-            if (rb.velocity.y < 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-            }
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            jumpBufferCounter = 0;
+
             if (!isGrounded)
             {
                 extraJumpsCounter++;
             }
-            //isGrounded = false;
+            jumpBufferCounter = 0;
+            coyoteTimeCounter = 0;
             inputController.isJumping = true;
             inputController.isFalling = false;
-            //AudioManager.PlaySound("Jump Sound");
             jumpTimeCounter = 0;
             minJumpTimeCounter = 0;
+            //AudioManager.PlaySound("Jump Sound");
         }
         // Variable jump height
-        if (!inputController.isJumpHeld && rb.velocity.y > 0 && minJumpTimeCounter > minJumpTime)
+        if (!inputController.isJumpHeld && rb.velocity.y > 0 && minJumpTimeCounter > minJumpTime && inputController.isJumping)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.96f);
 
@@ -135,6 +138,7 @@ public class SpriteMovement : MonoBehaviour
         if (inputController.isJumping)
         {
             minJumpTimeCounter += dt;
+            jumpTimeCounter += dt;
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -152,6 +156,7 @@ public class SpriteMovement : MonoBehaviour
                 extraJumpsCounter = 0;
                 inputController.isJumping = false;
                 inputController.isFalling = false;
+                inputController.isRising = false;
             }
         }
     }

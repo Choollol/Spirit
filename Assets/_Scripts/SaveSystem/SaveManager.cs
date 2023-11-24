@@ -16,6 +16,8 @@ public class SaveManager : MonoBehaviour
     private int saveInterval = 180;
 
     private bool isFirstTime;
+
+    [SerializeField] private PlayerData playerData;
     private void Awake()
     {
         path = Application.persistentDataPath + "/save.json";
@@ -44,6 +46,10 @@ public class SaveManager : MonoBehaviour
         data.controlButtons.Clear();
         data.controlAltButtons.Clear();
 
+        data.playerExtraJumpForce = playerData.extraJumpForce;
+        data.playerExtraSpeed = playerData.extraSpeed;
+        data.playerExtraJumps = playerData.extraJumps;
+
         foreach (var control in InputManager.Controls)
         {
             data.controlNames.Add(control.Key);
@@ -63,6 +69,11 @@ public class SaveManager : MonoBehaviour
         {
             InputManager.SetControls(data.controlNames, data.controlButtons, data.controlAltButtons);
         }
+
+        playerData.extraJumpForce = data.playerExtraJumpForce;
+        playerData.extraSpeed = data.playerExtraSpeed;
+        playerData.extraJumps = data.playerExtraJumps;
+        EventMessenger.TriggerEvent("UpdatePlayerData");
 
         isFirstTime = false;
     }

@@ -1,0 +1,287 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7693266390013721700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6252808418998435034}
+  - component: {fileID: 7941305681180342031}
+  - component: {fileID: 9067381150739555985}
+  m_Layer: 0
+  m_Name: Fallink Towers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6252808418998435034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7693266390013721700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2, y: -0.64, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6473904846346074780}
+  - {fileID: 8764493613196062716}
+  - {fileID: 2300726924699427101}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &7941305681180342031
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7693266390013721700}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &9067381150739555985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7693266390013721700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce01c3735b49ac459e6e26950b23f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCompleted: 0
+  doResetOnCompletionCheck: 1
+  messenger: {fileID: 11400000, guid: 6186c65c738e8734db420b59779e47e4, type: 2}
+  basePrefab: {fileID: 1156251219657590483, guid: 2b1760456b752a847bfa9269bfd88088, type: 3}
+  topPrefab: {fileID: 8842098085490839958, guid: b9b4493c2e31f6a4d8ffe0b6fba207f9, type: 3}
+  baseCounts: 030000000400000003000000
+--- !u!1001 &598749517041685948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6252808418998435034}
+    m_Modifications:
+    - target: {fileID: 3579188881371768492, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_Name
+      value: Fallink Tower Holder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+--- !u!4 &8764493613196062716 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+  m_PrefabInstance: {fileID: 598749517041685948}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2898485456245932252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6252808418998435034}
+    m_Modifications:
+    - target: {fileID: 3579188881371768492, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_Name
+      value: Fallink Tower Holder
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+--- !u!4 &6473904846346074780 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+  m_PrefabInstance: {fileID: 2898485456245932252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7927252270531287901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6252808418998435034}
+    m_Modifications:
+    - target: {fileID: 3579188881371768492, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_Name
+      value: Fallink Tower Holder (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+--- !u!4 &2300726924699427101 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8209660808382118464, guid: 25ddb433c3787dd48805ea6c43378fa9, type: 3}
+  m_PrefabInstance: {fileID: 7927252270531287901}
+  m_PrefabAsset: {fileID: 0}

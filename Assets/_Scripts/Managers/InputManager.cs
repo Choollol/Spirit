@@ -74,25 +74,27 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonDown(string name)
     {
-        foreach (KeyCode key in controls[name])
+        return Input.GetKeyDown(controls[name][0]) || Input.GetKeyDown(controls[name][1]);
+        /*foreach (KeyCode key in controls[name])
         {
             if (Input.GetKeyDown(key))
             {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
     public static bool GetButton(string name)
     {
-        foreach (KeyCode key in controls[name])
+        return Input.GetKey(controls[name][0]) || Input.GetKey(controls[name][1]);
+        /*foreach (KeyCode key in controls[name])
         {
             if (Input.GetKey(key))
             {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
     /*public static void Save()
     {

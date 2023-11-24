@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 3.6
   speed: 2
+  extraJumpForce: 0
+  extraSpeed: 0
+  extraJumps: 0

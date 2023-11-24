@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class InputController : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class InputController : MonoBehaviour
     public bool isJumpHeld { get; private set; }
     [HideInInspector] public bool isFalling;
     [HideInInspector] public bool isJumping;
+    [HideInInspector] public bool isRising;
+
+    public bool doAttack { get; private set; }
+    public int attackType { get; private set; } // 0 for melee, 1 for ranged
+
+    private float attackCooldown = 0.36f;
+    private float attackTimer = 0;
 
     [SerializeField] private InputType inputType;
 
@@ -50,6 +58,26 @@ public class InputController : MonoBehaviour
                 }
                 doJump = InputManager.GetButtonDown(controlsPrefix + "Jump");
                 isJumpHeld = InputManager.GetButton(controlsPrefix + "Jump");
+
+                if (doAttack)
+                {
+                    doAttack = false;
+                }
+                doAttack = (InputManager.GetButtonDown("Melee") || InputManager.GetButtonDown("Shoot")) && attackTimer <= 0;
+                if (doAttack)
+                {
+                    attackTimer = attackCooldown;
+                    attackType = InputManager.GetButtonDown("Melee") ? 0 : 1;
+                }
+                if (attackTimer > 0)
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+
+                if (InputManager.GetButtonDown("Reset"))
+                {
+                    EventMessenger.TriggerEvent("Reset");
+                }
             }
         }
     }

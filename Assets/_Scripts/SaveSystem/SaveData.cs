@@ -11,4 +11,8 @@ public class SaveData
     public List<string> controlNames = new List<string>();
     public List<string> controlButtons = new List<string>();
     public List<string> controlAltButtons = new List<string>();
+
+    public float playerExtraJumpForce;
+    public float playerExtraSpeed;
+    public int playerExtraJumps;
 }
