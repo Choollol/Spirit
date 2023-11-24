@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentDepth: 0
+  currentPuzzleMessenger: {fileID: 11400000, guid: 1c82728183b48114ea5e5ddc529a3350, type: 2}
   risingPylonMessenger: {fileID: 11400000, guid: d4b5da9f2437fce4f9401f58285e9232, type: 2}
   linkOffset: 5
   doStartRisen: 0

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PuzzleComponent : MonoBehaviour, IInteractable
 {
     [SerializeField] protected int parentDepth;
+    [SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
+
     protected Transform controllerTransform;
     protected bool isCompleted = false;
     public virtual void Awake()
@@ -35,11 +37,19 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
     }
     public virtual void MeleeInteract()
     {
-
+        SetCurrentPuzzle();
     }
     public virtual void RangedInteract()
     {
-
+        SetCurrentPuzzle();
+    }
+    protected void SetCurrentPuzzle()
+    {
+        if (currentPuzzleMessenger.objects[0] != controllerTransform.gameObject)
+        {
+            currentPuzzleMessenger.objects[0] = controllerTransform.gameObject;
+            EventMessenger.TriggerEvent("CurrentPuzzleChanged");
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

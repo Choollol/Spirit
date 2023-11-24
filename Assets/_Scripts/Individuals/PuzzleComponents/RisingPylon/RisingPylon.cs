@@ -55,6 +55,8 @@ public class RisingPylon : PuzzleComponent
     }
     public override void MeleeInteract()
     {
+        base.MeleeInteract();
+
         if (isCompleted)
         {
             return;

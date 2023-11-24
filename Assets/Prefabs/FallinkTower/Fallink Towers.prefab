@@ -96,6 +96,7 @@ MonoBehaviour:
   isCompleted: 0
   doResetOnCompletionCheck: 1
   messenger: {fileID: 11400000, guid: 6186c65c738e8734db420b59779e47e4, type: 2}
+  currentPuzzleMessenger: {fileID: 11400000, guid: 1c82728183b48114ea5e5ddc529a3350, type: 2}
   basePrefab: {fileID: 1156251219657590483, guid: 2b1760456b752a847bfa9269bfd88088, type: 3}
   topPrefab: {fileID: 8842098085490839958, guid: b9b4493c2e31f6a4d8ffe0b6fba207f9, type: 3}
   baseCounts: 030000000400000003000000

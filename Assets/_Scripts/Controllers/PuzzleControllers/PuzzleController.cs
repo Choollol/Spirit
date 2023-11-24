@@ -13,15 +13,19 @@ public class PuzzleController : MonoBehaviour
     [SerializeField] protected bool doResetOnCompletionCheck;
 
     [SerializeField] protected ScriptablePrimitive messenger;
+
+    [SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
     public virtual void OnEnable()
     {
         EventMessenger.StartListening("Reset", ResetPuzzle);
         EventMessenger.StartListening("Check" + name, CheckForCompletion);
+        EventMessenger.StartListening("CurrentPuzzleChanged", SetCurrentPuzzle);
     }
     public virtual void OnDisable()
     {
         EventMessenger.StopListening("Reset", ResetPuzzle);
         EventMessenger.StopListening("Check" + name, CheckForCompletion);
+        EventMessenger.StopListening("CurrentPuzzleChanged", SetCurrentPuzzle);
     }
     public virtual void Start()
     {
@@ -42,24 +46,19 @@ public class PuzzleController : MonoBehaviour
     }
     protected virtual void DeactivatePuzzle()
     {
-        if (GameManager.currentPuzzle != gameObject)
+        if (currentPuzzleMessenger.objects[0] != gameObject)
         {
             return;
         }
-        GameManager.currentPuzzle = null;
+        currentPuzzleMessenger.objects[0] = null;
     }
     protected virtual void SetCurrentPuzzle()
     {
-        if (GameManager.currentPuzzle == gameObject)
-        {
-            return;
-        }
-        GameManager.currentPuzzle = gameObject;
         ResetMessenger();
     }
     protected virtual void CheckForCompletion()
     {
-        if (GameManager.currentPuzzle != gameObject || isCompleted)
+        if (currentPuzzleMessenger.objects[0] != gameObject || isCompleted)
         {
             return;
         }
@@ -97,7 +96,7 @@ public class PuzzleController : MonoBehaviour
     }
     protected virtual void ResetPuzzle()
     {
-        if (GameManager.currentPuzzle != gameObject || isCompleted)
+        if (currentPuzzleMessenger.objects[0] != gameObject || isCompleted)
         {
             return;
         }
@@ -118,7 +117,7 @@ public class PuzzleController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            SetCurrentPuzzle();
+            //SetCurrentPuzzle();
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

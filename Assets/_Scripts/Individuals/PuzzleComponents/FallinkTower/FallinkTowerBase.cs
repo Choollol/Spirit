@@ -30,6 +30,8 @@ public class FallinkTowerBase : PuzzleComponent
 
     public override void RangedInteract()
     {
+        base.RangedInteract();
+
         if (towerSiblingIndex == 0)
         {
             GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex + 1)).gameObject.SetActive(false);

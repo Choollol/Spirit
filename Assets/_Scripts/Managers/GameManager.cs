@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     public static bool doCloseMenuOnCancel = true;
     private static bool isInTransition;
     private static bool isInWorld;
-
-    public static GameObject currentPuzzle;
     private void Awake()
     {
         if (instance != null && instance != this)
