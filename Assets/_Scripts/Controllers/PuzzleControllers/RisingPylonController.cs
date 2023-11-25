@@ -9,6 +9,6 @@ public class RisingPylonController : PuzzleController
     protected override void ResetMessenger()
     {
         base.ResetMessenger();
-        messenger.floats[0] = 0;
+        PrimitiveMessenger.floats[name] = 0;
     }
 }

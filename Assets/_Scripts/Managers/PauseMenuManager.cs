@@ -97,7 +97,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         objectDict["enterControlText"].SetActive(false);
         StartCoroutine(HandleCanCloseMenu());
-        AudioManager.PlaySound("Control Edited Sound", 0.6f, 1.5f, true);
+        AudioPlayer.PlaySound("Control Edited Sound", 0.6f, 1.5f, true);
     }
     private IEnumerator HandleCanCloseMenu()
     {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Animator), typeof(SpriteRenderer))]
 public class SpriteAnimator : MonoBehaviour
@@ -28,6 +27,8 @@ public class SpriteAnimator : MonoBehaviour
     [SerializeField] protected bool doesAttack;
 
     protected bool doPlayAnimations = true;
+
+    protected int framesBeforeAttackAnimation = 0;
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -64,14 +65,26 @@ public class SpriteAnimator : MonoBehaviour
         {
             yield break;
         }
-        animator.Play("Base Layer." + spriteName + "_" + action);
+        doPlayAnimations = false;
+        if (inputController.attackType == 0)
+        {
+            action = Action.Attack_Melee;
+        }
+        else if (inputController.attackType == 1)
+        {
+            action = Action.Attack_Ranged;
+        }
         StartAttacking();
-        yield return new WaitForEndOfFrame();
+        for (int i = 0; i < framesBeforeAttackAnimation / Time.timeScale; i++)
+        {
+            yield return null;
+        }
+        animator.Play("Base Layer." + spriteName + "_" + action);
+        yield return null;
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
             yield return null;
         }
-        doPlayAnimations = true;
         EndAttacking();
         yield break;
     }
@@ -81,7 +94,7 @@ public class SpriteAnimator : MonoBehaviour
     }
     protected virtual void EndAttacking()
     {
-
+        doPlayAnimations = true;
     }
     protected virtual void DirectionUpdate()
     {
@@ -94,7 +107,7 @@ public class SpriteAnimator : MonoBehaviour
             spriteRenderer.flipX = false;
         }
     }
-    private void ActionUpdate()
+    protected void ActionUpdate()
     {
         if (!doPlayAnimations)
         {
@@ -102,15 +115,6 @@ public class SpriteAnimator : MonoBehaviour
         }
         if (inputController.doAttack && doesAttack)
         {
-            if (inputController.attackType == 0)
-            {
-                action = Action.Attack_Melee;
-            }
-            else if (inputController.attackType == 1)
-            {
-                action = Action.Attack_Ranged;
-            }
-            doPlayAnimations = false;
             StartCoroutine(PlayAttackAnimation());
         }
         else if (inputController.isFalling)

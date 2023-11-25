@@ -8,8 +8,6 @@ public class RisingPylon : PuzzleComponent
 
     private static float riseSpeed = 1;
 
-    [SerializeField] private ScriptablePrimitive risingPylonMessenger;
-
     [SerializeField] private int linkOffset;
     [SerializeField] private bool doStartRisen;
 
@@ -32,6 +30,8 @@ public class RisingPylon : PuzzleComponent
             numeralLocalPos = transform.GetChild(0).localPosition;
         }
 
+        isMeleeInteractable = true;
+
         ResetPuzzle();
     }
     public override void ResetPuzzle()
@@ -49,26 +49,29 @@ public class RisingPylon : PuzzleComponent
         {
             transform.GetChild(0).localPosition = numeralLocalPos;
         }
-        risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
+        //risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
+        //risingPylonMessenger.floats[0] = 0;
+        PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = isRisen;
+        PrimitiveMessenger.floats[controllerTransform.name] = 0;
         StopAllCoroutines();
-        risingPylonMessenger.floats[0] = 0;
     }
     public override void MeleeInteract()
     {
-        base.MeleeInteract();
-
+        if (PrimitiveMessenger.floats[controllerTransform.name] == 1)//risingPylonMessenger.floats[0] == 1)
+        {
+            return;
+        }
         if (isCompleted)
         {
             return;
         }
+        base.MeleeInteract();
+
         Toggle();
+
     }
     public void Toggle()
     {
-        if (risingPylonMessenger.floats[0] == 1)
-        {
-            return;
-        }
         if (linkOffset != 0)
         {
             link.Toggle();
@@ -83,11 +86,15 @@ public class RisingPylon : PuzzleComponent
             isRisen = true;
             StartCoroutine(Rise());
         }
-        risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
+        //risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
+        PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = isRisen;
+        EventMessenger.TriggerEvent("Check" + transform.parent.name);
+        AudioPlayer.PlaySound("Rising Pylon Sound", 0.9f, 1.1f);
     }
     private IEnumerator Rise()
     {
-        risingPylonMessenger.floats[0] = 1;
+        //risingPylonMessenger.floats[0] = 1;
+        PrimitiveMessenger.floats[controllerTransform.name] = 1;
         while (transform.position.y < risenYPos)
         {
             transform.position += new Vector3(0, riseSpeed * Time.deltaTime);
@@ -97,13 +104,14 @@ public class RisingPylon : PuzzleComponent
         {
             transform.SetPosY(risenYPos);
         }
-        risingPylonMessenger.floats[0] = 0;
-        EventMessenger.TriggerEvent("Check" + transform.parent.name);
+        //risingPylonMessenger.floats[0] = 0;
+        PrimitiveMessenger.floats[controllerTransform.name] = 0;
         yield break;
     }
     private IEnumerator Descend()
     {
-        risingPylonMessenger.floats[0] = 1;
+        //risingPylonMessenger.floats[0] = 1;
+        PrimitiveMessenger.floats[controllerTransform.name] = 1;
         while (transform.position.y > descendedYPos)
         {
             transform.position -= new Vector3(0, riseSpeed * Time.deltaTime);
@@ -113,7 +121,8 @@ public class RisingPylon : PuzzleComponent
         {
             transform.SetPosY(descendedYPos);
         }
-        risingPylonMessenger.floats[0] = 0;
+        //risingPylonMessenger.floats[0] = 0;
+        PrimitiveMessenger.floats[controllerTransform.name] = 0;
         yield break;
     }
 }

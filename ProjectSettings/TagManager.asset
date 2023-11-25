@@ -7,6 +7,7 @@ TagManager:
   - Melee Interacter
   - Ranged Interacter
   - Ground
+  - Melee Interactable
   layers:
   - Default
   - TransparentFX

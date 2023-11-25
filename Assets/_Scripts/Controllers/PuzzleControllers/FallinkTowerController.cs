@@ -39,24 +39,4 @@ public class FallinkTowerController : PuzzleController
             }
         }
     }
-    /*protected override void CheckForCompletion()
-    {
-        base.CheckForCompletion();
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            if (fallinkTowerMessenger.bools[i])
-            {
-                ResetPuzzle();
-                return;
-            }
-        }
-        Complete();
-    }
-    protected override void ResetBools()
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            fallinkTowerMessenger.bools[i] = false;
-        }
-    }*/
 }

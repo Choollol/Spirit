@@ -13,7 +13,7 @@ Jump
 W
 UpArrow
 *
-Melee
+Interact
 J
 C
 *

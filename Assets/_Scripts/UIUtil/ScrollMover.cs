@@ -10,7 +10,7 @@ public class ScrollMover : MonoBehaviour
     [SerializeField] private RectTransform mask;
     [SerializeField] private float size;
     [SerializeField] private float speed;
-    private float currentSpeed = 30f;
+    private float currentSpeed = 45f;
 
     private bool doMove;
     void Start()
@@ -37,7 +37,7 @@ public class ScrollMover : MonoBehaviour
                 right.localPosition += new Vector3(currentSpeed / 2 * Time.unscaledDeltaTime, 0);
                 if (currentSpeed < speed)
                 {
-                    currentSpeed += 1f;
+                    currentSpeed += 2f;
                 }
             }
             if (left.localPosition.x < -size / 2 || right.localPosition.x > size / 2)

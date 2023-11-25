@@ -9,6 +9,9 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
 
     protected Transform controllerTransform;
     protected bool isCompleted = false;
+
+    protected bool isMeleeInteractable;
+    protected bool isRangedInteractable;
     public virtual void Awake()
     {
         controllerTransform = transform.parent;
@@ -37,19 +40,30 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
     }
     public virtual void MeleeInteract()
     {
+        if (!isMeleeInteractable)
+        {
+            return;
+        }
         SetCurrentPuzzle();
+        EventMessenger.TriggerEvent("MeleeInteracted");
     }
     public virtual void RangedInteract()
     {
+        if (!isRangedInteractable)
+        {
+            return;
+        }
         SetCurrentPuzzle();
+        EventMessenger.TriggerEvent("RangedInteracted");
     }
     protected void SetCurrentPuzzle()
     {
-        if (currentPuzzleMessenger.objects[0] != controllerTransform.gameObject)
+        if (currentPuzzleMessenger.objects[0] == controllerTransform.gameObject)
         {
-            currentPuzzleMessenger.objects[0] = controllerTransform.gameObject;
-            EventMessenger.TriggerEvent("CurrentPuzzleChanged");
+            return;
         }
+        currentPuzzleMessenger.objects[1] = controllerTransform.gameObject;
+        EventMessenger.TriggerEvent("SetCurrentPuzzle");
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

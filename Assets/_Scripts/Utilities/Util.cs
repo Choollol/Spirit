@@ -86,6 +86,12 @@ public static class Util
     {
         return (KeyCode)Enum.Parse(typeof(KeyCode), s, true);
     }
+
+    /// <summary>
+    /// Only gets the transforms of objects without children
+    /// </summary>
+    /// <param name="root"></param>
+    /// <returns></returns>
     public static List<Transform> GetChildTransforms(this Transform root)
     {
         List<Transform> list = new List<Transform>();

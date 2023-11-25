@@ -12,8 +12,6 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] protected bool doResetOnCompletionCheck;
 
-    [SerializeField] protected ScriptablePrimitive messenger;
-
     [SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
     public virtual void OnEnable()
     {
@@ -38,10 +36,17 @@ public class PuzzleController : MonoBehaviour
                 rigidbodies.Add(t.GetComponent<Rigidbody2D>());
             }
         }
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            PrimitiveMessenger.bools[name + i] = false;
+        }
     }
     public virtual void SetComplete()
     {
         isCompleted = true;
+        OnDisable();
+        ResetMessenger();
+        PuzzleManager.CompletePuzzle(name);
         EventMessenger.TriggerEvent("Complete" + name);
     }
     protected virtual void DeactivatePuzzle()
@@ -64,7 +69,7 @@ public class PuzzleController : MonoBehaviour
         }
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (!messenger.bools[i])
+            if (!PrimitiveMessenger.bools[name + i])//!messenger.bools[i])
             {
                 if (doResetOnCompletionCheck)
                 {
@@ -84,14 +89,17 @@ public class PuzzleController : MonoBehaviour
         isCompleted = true;
         OnDisable();
         ResetMessenger();
+        PuzzleManager.CompletePuzzle(name);
         EventMessenger.TriggerEvent("Complete" + name);
         EventMessenger.TriggerEvent("PuzzleCompleted");
+        AudioPlayer.PlaySound("Complete Sound");
     }
     protected virtual void ResetMessenger()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            messenger.bools[i] = false;
+            //messenger.bools[i] = false;
+            PrimitiveMessenger.bools[name + i] = false;
         }
     }
     protected virtual void ResetPuzzle()
@@ -124,7 +132,7 @@ public class PuzzleController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            DeactivatePuzzle();
+            //DeactivatePuzzle();
         }
     }
 }

@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class FallinkTowerHolder : MonoBehaviour
 {
-    [SerializeField] private ScriptablePrimitive fallinkTowerMessenger;
-
     private int baseCount = 0;
     public void IncrementBaseCount()
     {
@@ -17,7 +13,8 @@ public class FallinkTowerHolder : MonoBehaviour
         baseCount--;
         if (baseCount <= 0)
         {
-            fallinkTowerMessenger.bools[transform.GetSiblingIndex()] = true;
+            //fallinkTowerMessenger.bools[transform.GetSiblingIndex()] = true;
+            PrimitiveMessenger.bools[transform.parent.name + transform.GetSiblingIndex()] = true;
         }
     }
 }

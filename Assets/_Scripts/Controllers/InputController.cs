@@ -63,11 +63,11 @@ public class InputController : MonoBehaviour
                 {
                     doAttack = false;
                 }
-                doAttack = (InputManager.GetButtonDown("Melee") || InputManager.GetButtonDown("Shoot")) && attackTimer <= 0;
+                doAttack = (InputManager.GetButtonDown("Interact") || InputManager.GetButtonDown("Shoot")) && attackTimer <= 0;
                 if (doAttack)
                 {
                     attackTimer = attackCooldown;
-                    attackType = InputManager.GetButtonDown("Melee") ? 0 : 1;
+                    attackType = InputManager.GetButtonDown("Interact") ? 0 : 1;
                 }
                 if (attackTimer > 0)
                 {

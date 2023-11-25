@@ -14,6 +14,8 @@ public class FallinkTowerBase : PuzzleComponent
         tower = transform.parent.GetComponent<FallinkTowerHolder>();
 
         towerSiblingIndex = tower.transform.GetSiblingIndex();
+
+        isRangedInteractable = true;
     }
     public override void OnEnable()
     {
@@ -46,6 +48,7 @@ public class FallinkTowerBase : PuzzleComponent
             GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex + 1)).gameObject.SetActive(false);
         }
         gameObject.SetActive(false);
+        AudioPlayer.PlaySound("Fallink Tower Break Sound", 0.9f, 1.1f, false);
     }
     private Transform GetFirstActiveBase(Transform tower)
     {
