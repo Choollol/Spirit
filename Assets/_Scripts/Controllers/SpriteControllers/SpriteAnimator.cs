@@ -28,7 +28,7 @@ public class SpriteAnimator : MonoBehaviour
 
     protected bool doPlayAnimations = true;
 
-    protected int framesBeforeAttackAnimation = 0;
+    protected bool doPlayAttackAnimation = true;
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -65,7 +65,12 @@ public class SpriteAnimator : MonoBehaviour
         {
             yield break;
         }
-        doPlayAnimations = false;
+        doPlayAttackAnimation = true;
+        StartAttacking();
+        if (!doPlayAttackAnimation)
+        {
+            yield break;
+        }
         if (inputController.attackType == 0)
         {
             action = Action.Attack_Melee;
@@ -74,12 +79,9 @@ public class SpriteAnimator : MonoBehaviour
         {
             action = Action.Attack_Ranged;
         }
-        StartAttacking();
-        for (int i = 0; i < framesBeforeAttackAnimation / Time.timeScale; i++)
-        {
-            yield return null;
-        }
+        doPlayAnimations = false;
         animator.Play("Base Layer." + spriteName + "_" + action);
+        Attacking();
         yield return null;
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         {
@@ -89,6 +91,10 @@ public class SpriteAnimator : MonoBehaviour
         yield break;
     }
     protected virtual void StartAttacking()
+    {
+
+    }
+    protected virtual void Attacking()
     {
 
     }

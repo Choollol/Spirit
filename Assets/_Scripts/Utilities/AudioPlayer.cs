@@ -22,7 +22,7 @@ public class AudioPlayer : MonoBehaviour
             }
         }
     }
-    public static void PlayButtonClick()
+    public static void ButtonClick()
     {
         sounds["Button Click"].Play();
     }

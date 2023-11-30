@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class PlayerAuraAnimator : SpriteAnimator
 {
-    private BoxCollider2D boxCollider;
+    private CircleCollider2D circleCollider;
+
+    private Collider2D[] overlapResults = new Collider2D[5];
+    private ContactFilter2D contactFilter;
     private void OnEnable()
     {
         EventMessenger.StartListening("MeleeInteracted", Interacted);
@@ -18,37 +21,30 @@ public class PlayerAuraAnimator : SpriteAnimator
     {
         base.Start();
 
-        boxCollider = GetComponent<BoxCollider2D>();
-        boxCollider.enabled = false;
+        circleCollider = GetComponent<CircleCollider2D>();
+        circleCollider.enabled = false;
 
-        framesBeforeAttackAnimation = 15;
+        contactFilter.NoFilter();
+        contactFilter.useTriggers = true;
     }
     private void Interacted()
     {
-        EndAttacking();
-        StopAllCoroutines();
+        circleCollider.enabled = false;
     }
     protected override void StartAttacking()
     {
-        if (action == Action.Attack_Melee)
+        if (inputController.attackType == 0 && 
+            Physics2D.OverlapCircle(transform.position, circleCollider.radius - 0.02f, contactFilter, overlapResults) > 1)
         {
-            boxCollider.enabled = true;
-            StartCoroutine(DisableCollider());
+            foreach (Collider2D collider in overlapResults)
+            {
+                if (collider != null && collider.gameObject.CompareTag("Melee Interactable"))
+                {
+                    circleCollider.enabled = true;
+                    doPlayAttackAnimation = false;
+                    return;
+                }
+            }
         }
-    }
-    private IEnumerator DisableCollider()
-    {
-        for (int i = 0; i < framesBeforeAttackAnimation / Time.timeScale; i++)
-        {
-            yield return null;
-        }
-        boxCollider.enabled = false;
-        yield break;
-    }
-    protected override void EndAttacking()
-    {
-        base.EndAttacking();
-
-        boxCollider.enabled = false;
     }
 }

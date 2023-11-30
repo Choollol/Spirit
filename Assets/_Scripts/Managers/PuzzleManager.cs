@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
 {
-    [SerializeField] private GameObjectMessenger currentPuzzleMessenger; // objects[0] = currentPuzzle, objects[1] = new puzzle
+    //[SerializeField] private GameObjectMessenger currentPuzzleMessenger; // objects[0] = currentPuzzle, objects[1] = new puzzle
 
     private static Dictionary<string, bool> completedDict = new Dictionary<string, bool>();
 
@@ -18,7 +18,8 @@ public class PuzzleManager : MonoBehaviour
     }
     public void SetCurrentPuzzle()
     {
-        currentPuzzleMessenger.objects[0] = currentPuzzleMessenger.objects[1];
+        ObjectMessenger.SetGameObject("currentPuzzle", ObjectMessenger.GetGameObject("newPuzzle"));
+        //currentPuzzleMessenger.objects[0] = currentPuzzleMessenger.objects[1];
         EventMessenger.TriggerEvent("CurrentPuzzleChanged");
     }
     public static void CompletePuzzle(string name)

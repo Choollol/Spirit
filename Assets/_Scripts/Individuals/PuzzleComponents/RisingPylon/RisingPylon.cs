@@ -57,18 +57,16 @@ public class RisingPylon : PuzzleComponent
     }
     public override void MeleeInteract()
     {
-        if (PrimitiveMessenger.floats[controllerTransform.name] == 1)//risingPylonMessenger.floats[0] == 1)
-        {
-            return;
-        }
-        if (isCompleted)
-        {
-            return;
-        }
         base.MeleeInteract();
+
+        if (PrimitiveMessenger.floats[controllerTransform.name] == 1 || isCompleted)//risingPylonMessenger.floats[0] == 1)
+        {
+            return;
+        }
 
         Toggle();
 
+        EventMessenger.TriggerEvent("Check" + transform.parent.name);
     }
     public void Toggle()
     {
@@ -88,7 +86,6 @@ public class RisingPylon : PuzzleComponent
         }
         //risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
         PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = isRisen;
-        EventMessenger.TriggerEvent("Check" + transform.parent.name);
         AudioPlayer.PlaySound("Rising Pylon Sound", 0.9f, 1.1f);
     }
     private IEnumerator Rise()

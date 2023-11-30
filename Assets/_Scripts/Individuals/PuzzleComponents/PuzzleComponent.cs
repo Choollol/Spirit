@@ -5,13 +5,15 @@ using UnityEngine;
 public class PuzzleComponent : MonoBehaviour, IInteractable
 {
     [SerializeField] protected int parentDepth;
-    [SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
+    //[SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
 
     protected Transform controllerTransform;
     protected bool isCompleted = false;
 
     protected bool isMeleeInteractable;
     protected bool isRangedInteractable;
+
+    protected bool canInteract = true;
     public virtual void Awake()
     {
         controllerTransform = transform.parent;
@@ -58,11 +60,12 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
     }
     protected void SetCurrentPuzzle()
     {
-        if (currentPuzzleMessenger.objects[0] == controllerTransform.gameObject)
+        if (ObjectMessenger.GetGameObject("currentPuzzle") == controllerTransform.gameObject)//currentPuzzleMessenger.objects[0] == controllerTransform.gameObject)
         {
             return;
         }
-        currentPuzzleMessenger.objects[1] = controllerTransform.gameObject;
+        //currentPuzzleMessenger.objects[1] = controllerTransform.gameObject;
+        ObjectMessenger.SetGameObject("newPuzzle", controllerTransform.gameObject);
         EventMessenger.TriggerEvent("SetCurrentPuzzle");
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -85,6 +88,13 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
         if (collision.gameObject.CompareTag("Ranged Interacter"))
         {
             RangedInteract();
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Melee Interacter") && isMeleeInteractable)
+        {
+            EventMessenger.TriggerEvent("MeleeInteracted");
         }
     }
 }

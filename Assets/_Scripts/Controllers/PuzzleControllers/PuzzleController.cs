@@ -12,7 +12,9 @@ public class PuzzleController : MonoBehaviour
 
     [SerializeField] protected bool doResetOnCompletionCheck;
 
-    [SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
+    protected int boolsToCheck;
+
+    //[SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
     public virtual void OnEnable()
     {
         EventMessenger.StartListening("Reset", ResetPuzzle);
@@ -40,6 +42,7 @@ public class PuzzleController : MonoBehaviour
         {
             PrimitiveMessenger.bools[name + i] = false;
         }
+        boolsToCheck = transform.childCount;
     }
     public virtual void SetComplete()
     {
@@ -51,11 +54,12 @@ public class PuzzleController : MonoBehaviour
     }
     protected virtual void DeactivatePuzzle()
     {
-        if (currentPuzzleMessenger.objects[0] != gameObject)
+        if (ObjectMessenger.GetGameObject("currentPuzzle") != gameObject)//currentPuzzleMessenger.objects[0] != gameObject)
         {
             return;
         }
-        currentPuzzleMessenger.objects[0] = null;
+        //currentPuzzleMessenger.objects[0] = null;
+        ObjectMessenger.SetGameObject("currentPuzzle", null);
     }
     protected virtual void SetCurrentPuzzle()
     {
@@ -63,11 +67,11 @@ public class PuzzleController : MonoBehaviour
     }
     protected virtual void CheckForCompletion()
     {
-        if (currentPuzzleMessenger.objects[0] != gameObject || isCompleted)
+        if (/*currentPuzzleMessenger.objects[0]*/ ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
         {
             return;
         }
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < boolsToCheck; i++)
         {
             if (!PrimitiveMessenger.bools[name + i])//!messenger.bools[i])
             {
@@ -104,7 +108,7 @@ public class PuzzleController : MonoBehaviour
     }
     protected virtual void ResetPuzzle()
     {
-        if (currentPuzzleMessenger.objects[0] != gameObject || isCompleted)
+        if (/*currentPuzzleMessenger.objects[0]*/ ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
         {
             return;
         }
@@ -120,19 +124,6 @@ public class PuzzleController : MonoBehaviour
         }
         ResetMessenger();
         EventMessenger.TriggerEvent("Reset" + transform.name);
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            //SetCurrentPuzzle();
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            //DeactivatePuzzle();
-        }
+        AudioPlayer.PlaySound("Reset Sound");
     }
 }
