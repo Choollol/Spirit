@@ -43,6 +43,7 @@ public class FaeGuider : PuzzleComponent
         }
         isOnRightEnd = doStartRightEnd;
         PrimitiveMessenger.floats[controllerTransform.name] = 0;
+        StopAllCoroutines();
     }
     public override void MeleeInteract()
     {

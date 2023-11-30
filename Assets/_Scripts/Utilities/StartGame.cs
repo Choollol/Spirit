@@ -7,8 +7,8 @@ public class StartGame : MonoBehaviour
 {
     private void Start()
     {
-        //StartCoroutine(GameStart());
-        SceneManager.LoadSceneAsync("Test", LoadSceneMode.Additive);
+        StartCoroutine(GameStart());
+        //SceneManager.LoadSceneAsync("Test", LoadSceneMode.Additive);
     }
     private IEnumerator GameStart()
     {

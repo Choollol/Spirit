@@ -25,12 +25,18 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
     public virtual void OnEnable()
     {
         EventMessenger.StartListening("Reset" + controllerTransform.name, ResetPuzzle);
-        EventMessenger.StartListening("Complete" + controllerTransform.name, Complete);
+        EventMessenger.StartListening("CompleteComponents" + controllerTransform.name, Complete);
+        EventMessenger.StartListening("SetComplete" + controllerTransform.name, SetComplete);
     }
     public virtual void OnDisable()
     {
         EventMessenger.StopListening("Reset" + controllerTransform.name, ResetPuzzle);
-        EventMessenger.StopListening("Complete" + controllerTransform.name, Complete);
+        EventMessenger.StopListening("CompleteComponents" + controllerTransform.name, Complete);
+        EventMessenger.StopListening("SetComplete" + controllerTransform.name, SetComplete);
+    }
+    protected virtual void SetComplete()
+    {
+        Complete();
     }
     public virtual void Complete()
     {

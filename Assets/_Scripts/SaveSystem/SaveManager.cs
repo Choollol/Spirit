@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-
+using System;
 public class SaveManager : MonoBehaviour
 {
     private string path;
@@ -32,7 +31,7 @@ public class SaveManager : MonoBehaviour
     }
     private void Start()
     {
-        File.Delete(path);
+        //File.Delete(path);
         Load();
 
         InvokeRepeating("Save", saveInterval, saveInterval);
@@ -42,19 +41,32 @@ public class SaveManager : MonoBehaviour
         data.sfxVolume = VolumeManager.sfxVolume;
         data.bgmVolume = VolumeManager.bgmVolume;
 
-        data.controlNames.Clear();
-        data.controlButtons.Clear();
-        data.controlAltButtons.Clear();
-
         data.playerExtraJumpForce = playerData.extraJumpForce;
         data.playerExtraSpeed = playerData.extraSpeed;
         data.playerExtraJumps = playerData.extraJumps;
+
+        data.controlNames = new List<string>();
+        data.controlButtons = new List<string>();
+        data.controlAltButtons = new List<string>();
 
         foreach (var control in InputManager.Controls)
         {
             data.controlNames.Add(control.Key);
             data.controlButtons.Add(control.Value[0].ToString());
-            data.controlButtons.Add(control.Value[1].ToString());
+            data.controlAltButtons.Add(control.Value[1].ToString());
+        }
+
+        data.completedPuzzleNames = new List<string>();
+        data.completedPuzzleStatuses = new List<bool>();
+
+        string[] worlds = Enum.GetNames(typeof(GameManager.World));
+        for (int i = 0; i < worlds.Length; i++)
+        {
+            foreach (var puzzle in PuzzleManager.completedDict[((GameManager.World)i).ToString()])
+            {
+                data.completedPuzzleNames.Add(puzzle.Key);
+                data.completedPuzzleStatuses.Add(puzzle.Value);
+            }
         }
 
         WriteData();
@@ -74,6 +86,18 @@ public class SaveManager : MonoBehaviour
         playerData.extraSpeed = data.playerExtraSpeed;
         playerData.extraJumps = data.playerExtraJumps;
         EventMessenger.TriggerEvent("UpdatePlayerData");
+
+        string[] worlds = Enum.GetNames(typeof(GameManager.World));
+        int index = 0;
+        for (int i = 0; i < worlds.Length; i++)
+        {
+            for (int j = 0; j < data.completedPuzzleNames.Count; j++)
+            {
+                PuzzleManager.completedDict[((GameManager.World)i).ToString()].Add(data.completedPuzzleNames[index], data.completedPuzzleStatuses[index]);
+                EventMessenger.TriggerEvent("SetComplete" + data.completedPuzzleNames[index]);
+                index++;
+            }
+        }
 
         isFirstTime = false;
     }

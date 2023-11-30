@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum World
+    {
+        Test, Test2
+    }
+
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
@@ -13,6 +19,8 @@ public class GameManager : MonoBehaviour
     public static bool doCloseMenuOnCancel = true;
     private static bool isInTransition;
     private static bool isInWorld;
+
+    public static World currentWorld { get; private set; }
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -55,6 +63,41 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (currentWorld == World.Test)
+            {
+                SwitchWorld("Test2");
+            }
+            else
+            {
+                SwitchWorld("Test");
+            }
+        }
+    }
+    private void SwitchWorld(string newWorld)
+    {
+        StartCoroutine(HandleSwitchWorld(newWorld));
+    }
+    private IEnumerator HandleSwitchWorld(string newWorld)
+    {
+        EventMessenger.TriggerEvent("StartTransition");
+        while (PrimitiveMessenger.bools["isTransitionFading"])
+        {
+            yield return null;
+        }
+        SceneManager.UnloadSceneAsync(currentWorld.ToString());
+        SceneManager.LoadSceneAsync(newWorld, LoadSceneMode.Additive);
+        currentWorld = (World)Enum.Parse(typeof(World), newWorld);
+        yield return new WaitForSeconds(0.5f);
+        EventMessenger.TriggerEvent("WorldSwitched");
+        yield return new WaitForSeconds(0.5f);
+        EventMessenger.TriggerEvent("EndTransition");
+        while (PrimitiveMessenger.bools["isTransitionFading"])
+        {
+            yield return null;
+        }
+        yield break;
     }
     private static void PauseGame()
     {

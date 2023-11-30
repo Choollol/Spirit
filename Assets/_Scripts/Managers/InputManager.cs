@@ -87,30 +87,7 @@ public class InputManager : MonoBehaviour
     public static bool GetButton(string name)
     {
         return Input.GetKey(controls[name][0]) || Input.GetKey(controls[name][1]);
-        /*foreach (KeyCode key in controls[name])
-        {
-            if (Input.GetKey(key))
-            {
-                return true;
-            }
-        }
-        return false;*/
     }
-    /*public static void Save()
-    {
-        StreamWriter writer = new StreamWriter(path, false);
-
-        foreach (var control in controls)
-        {
-            string text = control.Key + "\n" + control.Value[0] + "\n";
-            if (control.Value.Count > 1)
-            {
-                text += control.Value[1] + "\n";
-            }
-            writer.WriteLine(text + "*");
-        }
-        writer.Close();
-    }*/
     public void LoadDefaultControls()
     {
         string[] temp = controlsFile.text.Trim().Split('*');

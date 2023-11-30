@@ -1,22 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaeSpirit : MonoBehaviour
+public class FaeSpirit : PuzzleComponent
 {
+    private static float startOpacity = 0.3f;
+
     private SpriteRenderer spriteRenderer;
 
     private static float moveSpeed = 1;
 
     private Vector3 targetPos;
     private float initialDistance;
-    void Start()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         targetPos = transform.parent.GetChild(1).position;
         initialDistance = Vector2.Distance(targetPos, transform.position);
 
+        SetOpacity();
+    }
+    protected override void SetComplete()
+    {
+        base.SetComplete();
+
+        transform.position = targetPos;
+        SetOpacity();
+    }
+    public override void ResetPuzzle()
+    {
+        StopAllCoroutines();
         SetOpacity();
     }
     public bool Move(float pathLength, Vector3 direction)
@@ -31,7 +46,7 @@ public class FaeSpirit : MonoBehaviour
     }
     private IEnumerator HandleMove(float pathLength, Vector3 direction)
     {
-        AudioPlayer.PlaySound("Fae Guide Move Sound");
+        AudioPlayer.PlaySound("Fae Guide Move Sound", 0.9f, 1.1f);
         float distanceTraveled = 0;
         while (distanceTraveled < pathLength)
         {
@@ -49,6 +64,6 @@ public class FaeSpirit : MonoBehaviour
     }
     private void SetOpacity()
     {
-        spriteRenderer.SetAlpha(initialDistance / Vector2.Distance(transform.position, targetPos) - 0.7f);
+        spriteRenderer.SetAlpha(startOpacity + Mathf.InverseLerp(initialDistance, 0, Vector2.Distance(transform.position, targetPos)) * (1 - startOpacity));
     }
 }

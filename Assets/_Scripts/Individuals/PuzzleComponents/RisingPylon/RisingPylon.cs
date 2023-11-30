@@ -22,8 +22,8 @@ public class RisingPylon : PuzzleComponent
     {
         link = controllerTransform.GetChild((transform.GetSiblingIndex() + linkOffset) % controllerTransform.childCount).GetComponent<RisingPylon>();
 
-        risenYPos = transform.position.y + 0.5f;
-        descendedYPos = transform.position.y - 0.32f;
+        risenYPos = transform.localPosition.y + 0.5f;
+        descendedYPos = transform.localPosition.y - 0.32f;
 
         if (linkOffset > 0)
         {
@@ -34,16 +34,22 @@ public class RisingPylon : PuzzleComponent
 
         ResetPuzzle();
     }
+    protected override void SetComplete()
+    {
+        base.SetComplete();
+
+        transform.SetLocalPosY(risenYPos);
+    }
     public override void ResetPuzzle()
     {
         isRisen = doStartRisen;
         if (doStartRisen)
         {
-            transform.SetPosY(risenYPos);
+            transform.SetLocalPosY(risenYPos);
         }
         else
         {
-            transform.SetPosY(descendedYPos);
+            transform.SetLocalPosY(descendedYPos);
         }
         if (linkOffset > 0)
         {
@@ -92,14 +98,14 @@ public class RisingPylon : PuzzleComponent
     {
         //risingPylonMessenger.floats[0] = 1;
         PrimitiveMessenger.floats[controllerTransform.name] = 1;
-        while (transform.position.y < risenYPos)
+        while (transform.localPosition.y < risenYPos)
         {
-            transform.position += new Vector3(0, riseSpeed * Time.deltaTime);
+            transform.localPosition += new Vector3(0, riseSpeed * Time.deltaTime);
             yield return null;
         }
-        if (transform.position.y > risenYPos)
+        if (transform.localPosition.y > risenYPos)
         {
-            transform.SetPosY(risenYPos);
+            transform.SetLocalPosY(risenYPos);
         }
         //risingPylonMessenger.floats[0] = 0;
         PrimitiveMessenger.floats[controllerTransform.name] = 0;
@@ -109,14 +115,14 @@ public class RisingPylon : PuzzleComponent
     {
         //risingPylonMessenger.floats[0] = 1;
         PrimitiveMessenger.floats[controllerTransform.name] = 1;
-        while (transform.position.y > descendedYPos)
+        while (transform.localPosition.y > descendedYPos)
         {
-            transform.position -= new Vector3(0, riseSpeed * Time.deltaTime);
+            transform.localPosition -= new Vector3(0, riseSpeed * Time.deltaTime);
             yield return null;
         }
-        if (transform.position.y < descendedYPos)
+        if (transform.localPosition.y < descendedYPos)
         {
-            transform.SetPosY(descendedYPos);
+            transform.SetLocalPosY(descendedYPos);
         }
         //risingPylonMessenger.floats[0] = 0;
         PrimitiveMessenger.floats[controllerTransform.name] = 0;

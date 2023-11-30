@@ -10,7 +10,7 @@ public class PuzzleController : MonoBehaviour
 
     public bool isCompleted;
 
-    [SerializeField] protected bool doResetOnCompletionCheck;
+    [SerializeField] protected bool doResetOnCheckFail;
 
     protected int boolsToCheck;
 
@@ -20,12 +20,14 @@ public class PuzzleController : MonoBehaviour
         EventMessenger.StartListening("Reset", ResetPuzzle);
         EventMessenger.StartListening("Check" + name, CheckForCompletion);
         EventMessenger.StartListening("CurrentPuzzleChanged", SetCurrentPuzzle);
+        EventMessenger.StartListening("SetComplete" + name, SetComplete);
     }
     public virtual void OnDisable()
     {
         EventMessenger.StopListening("Reset", ResetPuzzle);
         EventMessenger.StopListening("Check" + name, CheckForCompletion);
         EventMessenger.StopListening("CurrentPuzzleChanged", SetCurrentPuzzle);
+        EventMessenger.StopListening("SetComplete" + name, SetComplete);
     }
     public virtual void Start()
     {
@@ -46,11 +48,8 @@ public class PuzzleController : MonoBehaviour
     }
     public virtual void SetComplete()
     {
-        isCompleted = true;
-        OnDisable();
-        ResetMessenger();
-        PuzzleManager.CompletePuzzle(name);
-        EventMessenger.TriggerEvent("Complete" + name);
+        Complete();
+        EventMessenger.TriggerEvent("SetComplete" + name);
     }
     protected virtual void DeactivatePuzzle()
     {
@@ -75,7 +74,7 @@ public class PuzzleController : MonoBehaviour
         {
             if (!PrimitiveMessenger.bools[name + i])//!messenger.bools[i])
             {
-                if (doResetOnCompletionCheck)
+                if (doResetOnCheckFail)
                 {
                     ResetPuzzle();
                 }
@@ -83,6 +82,9 @@ public class PuzzleController : MonoBehaviour
             }
         }
         Complete();
+        EventMessenger.TriggerEvent("PuzzleCompleted");
+        EventMessenger.TriggerEvent("CompleteComponents" + name);
+        AudioPlayer.PlaySound("Complete Sound");
     }
     protected virtual void Complete()
     {
@@ -92,15 +94,11 @@ public class PuzzleController : MonoBehaviour
         }
         isCompleted = true;
         OnDisable();
-        ResetMessenger();
-        PuzzleManager.CompletePuzzle(name);
-        EventMessenger.TriggerEvent("Complete" + name);
-        EventMessenger.TriggerEvent("PuzzleCompleted");
-        AudioPlayer.PlaySound("Complete Sound");
+        PuzzleManager.CompletePuzzle(gameObject.scene.name, name);
     }
     protected virtual void ResetMessenger()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < boolsToCheck; i++)
         {
             //messenger.bools[i] = false;
             PrimitiveMessenger.bools[name + i] = false;
