@@ -26,7 +26,7 @@ public class PlayerInputController : InputController
     {
         base.Update();
 
-        if (canAct && allowInputControllerAction)
+        if (canAct)
         {
             if (!InputManager.GetButton("Move Left") || !InputManager.GetButton("Move Right"))
             {

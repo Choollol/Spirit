@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using PlasticPipe;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -17,12 +18,15 @@ public class InputManager : MonoBehaviour
         get { return controls; }
     }
 
+    public static bool allowInput = true;
+
     private int buttonToSwitch; // 0 for main control button, 1 for alternate control
 
     [SerializeField] private TextAsset controlsFile;
     private List<string> controlsText = new List<string>();
 
     [SerializeField] private ScriptablePrimitive controlToEditData; // bools: doSwitch, isAlt. strings: name, keyCodeString
+
 
     private void Awake()
     {
@@ -74,18 +78,18 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonDown(string name)
     {
-        return Input.GetKeyDown(controls[name][0]) || Input.GetKeyDown(controls[name][1]);
-        /*foreach (KeyCode key in controls[name])
+        if (!allowInput)
         {
-            if (Input.GetKeyDown(key))
-            {
-                return true;
-            }
+            return false;
         }
-        return false;*/
+        return Input.GetKeyDown(controls[name][0]) || Input.GetKeyDown(controls[name][1]);
     }
     public static bool GetButton(string name)
     {
+        if (!allowInput)
+        {
+            return false;
+        }
         return Input.GetKey(controls[name][0]) || Input.GetKey(controls[name][1]);
     }
     public void LoadDefaultControls()

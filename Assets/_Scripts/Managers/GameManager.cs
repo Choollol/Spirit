@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator HandleSwitchWorld(string newWorld)
     {
         EventMessenger.TriggerEvent("StartTransition");
-        EventMessenger.TriggerEvent("DisableInputControllerAction");
+        InputManager.allowInput = false;
         isInTransition = true;
         while (PrimitiveMessenger.bools["isTransitionFading"])
         {
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
-        EventMessenger.TriggerEvent("EnableInputControllerAction");
+        InputManager.allowInput = true;
         isInTransition = false;
         yield break;
     }

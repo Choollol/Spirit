@@ -10,8 +10,6 @@ public class InputController : MonoBehaviour
         None, User
     }
 
-    [HideInInspector] public static bool allowInputControllerAction = true;
-
     public bool canAct { get; protected set; }
     public float horizontalInput { get; protected set; }
     public bool doJump { get; protected set; }
@@ -27,13 +25,11 @@ public class InputController : MonoBehaviour
 
     public virtual void OnEnable()
     {
-        EventMessenger.StartListening("EnableInputControllerAction", EnableInputControllerAction);
-        EventMessenger.StartListening("DisableInputControllerAction", DisableInputControllerAction);
+
     }
     public virtual void OnDisable()
     {
-        EventMessenger.StopListening("EnableInputControllerAction", EnableInputControllerAction);
-        EventMessenger.StopListening("DisableInputControllerAction", DisableInputControllerAction);
+
     }
     public virtual void Start()
     {
@@ -42,13 +38,5 @@ public class InputController : MonoBehaviour
     public virtual void Update()
     {
         horizontalInput = 0;
-    }
-    private void EnableInputControllerAction()
-    {
-        allowInputControllerAction = true;
-    }
-    private void DisableInputControllerAction()
-    {
-        allowInputControllerAction = false;
     }
 }
