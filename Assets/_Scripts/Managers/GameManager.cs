@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
             }
             else if (isGameActive)
             {
+                SceneManager.LoadSceneAsync("Pause_Menu", LoadSceneMode.Additive);
+                isMenuOpen = true;
                 PauseGame();
             }
         }
@@ -103,8 +105,7 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = false;
         Time.timeScale = 0;
-        SceneManager.LoadSceneAsync("Pause_Menu", LoadSceneMode.Additive);
-        isMenuOpen = true;
+        
     }
     private static void UnpauseGame()
     {

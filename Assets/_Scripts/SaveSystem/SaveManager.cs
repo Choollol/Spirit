@@ -31,7 +31,7 @@ public class SaveManager : MonoBehaviour
     }
     private void Start()
     {
-        //File.Delete(path);
+        File.Delete(path);
         Load();
 
         InvokeRepeating("Save", saveInterval, saveInterval);
@@ -56,12 +56,14 @@ public class SaveManager : MonoBehaviour
             data.controlAltButtons.Add(control.Value[1].ToString());
         }
 
+        data.completedPuzzleCounts = new List<int>();
         data.completedPuzzleNames = new List<string>();
         data.completedPuzzleStatuses = new List<bool>();
 
         string[] worlds = Enum.GetNames(typeof(GameManager.World));
         for (int i = 0; i < worlds.Length; i++)
         {
+            data.completedPuzzleCounts.Add(PuzzleManager.completedDict[((GameManager.World)i).ToString()].Count);
             foreach (var puzzle in PuzzleManager.completedDict[((GameManager.World)i).ToString()])
             {
                 data.completedPuzzleNames.Add(puzzle.Key);
@@ -91,10 +93,10 @@ public class SaveManager : MonoBehaviour
         int index = 0;
         for (int i = 0; i < worlds.Length; i++)
         {
-            for (int j = 0; j < data.completedPuzzleNames.Count; j++)
+            for (int j = 0; j < data.completedPuzzleCounts[i]; j++)
             {
-                PuzzleManager.completedDict[((GameManager.World)i).ToString()].Add(data.completedPuzzleNames[index], data.completedPuzzleStatuses[index]);
-                EventMessenger.TriggerEvent("SetComplete" + data.completedPuzzleNames[index]);
+                PuzzleManager.completedDict[((GameManager.World)i).ToString()].Add(data.completedPuzzleNames[index], 
+                    data.completedPuzzleStatuses[index]);
                 index++;
             }
         }

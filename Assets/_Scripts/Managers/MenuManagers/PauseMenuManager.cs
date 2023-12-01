@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PauseMenuManager : MonoBehaviour
+public class PauseMenuManager : MenuManager
 {
     private static PauseMenuManager instance;
     public static PauseMenuManager Instance { get { return instance; } }
@@ -20,8 +20,10 @@ public class PauseMenuManager : MonoBehaviour
 
     private GameObject controlButtonsTarget;
 
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -44,6 +46,19 @@ public class PauseMenuManager : MonoBehaviour
         }
 
         EventMessenger.TriggerEvent("UpdateVolumeSliders");
+    }
+    public void ToggleRunInBackground()
+    {
+        if (Application.runInBackground)
+        {
+            Application.runInBackground = false;
+            objectDict["runInBackgroundText"].GetComponent<TextMeshProUGUI>().text = "No";
+        }
+        else
+        {
+            Application.runInBackground = true;
+            objectDict["runInBackgroundText"].GetComponent<TextMeshProUGUI>().text = "Yes";
+        }
     }
     public void ToggleFullscreen()
     {

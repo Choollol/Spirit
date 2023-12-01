@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        EventMessenger.StartListening("CloseMenu", CloseScene);
-    }
-    private void OnDisable()
-    {
-        EventMessenger.StopListening("CloseMenu", CloseScene);
-    }
-    private void Awake()
+    public virtual void Awake()
     {
         GameManager.OtherMenuOpened();
     }
-    private void CloseScene()
+    public virtual void OnEnable()
+    {
+        EventMessenger.StartListening("CloseMenu", CloseScene);
+    }
+    public virtual void OnDisable()
+    {
+        EventMessenger.StopListening("CloseMenu", CloseScene);
+    }
+    protected void CloseScene()
     {
         GameManager.OtherMenuClosed();
         SceneManager.UnloadSceneAsync(gameObject.scene);

@@ -16,6 +16,7 @@ public class SaveData
     public float playerExtraSpeed;
     public int playerExtraJumps;
 
+    public List<int> completedPuzzleCounts = new List<int>();
     public List<string> completedPuzzleNames = new List<string>();
     public List<bool> completedPuzzleStatuses = new List<bool>();
 }

@@ -25,11 +25,13 @@ public class PuzzleManager : MonoBehaviour
     {
         EventMessenger.StartListening("SetCurrentPuzzle", SetCurrentPuzzle);
         EventMessenger.StartListening("WorldSwitched", UpdateCompletePuzzles);
+        EventMessenger.StartListening("GameLoaded", UpdateCompletePuzzles);
     }
     private void OnDisable()
     {
         EventMessenger.StopListening("SetCurrentPuzzle", SetCurrentPuzzle);
         EventMessenger.StopListening("WorldSwitched", UpdateCompletePuzzles);
+        EventMessenger.StopListening("GameLoaded", UpdateCompletePuzzles);
     }
     public void SetCurrentPuzzle()
     {
@@ -43,6 +45,10 @@ public class PuzzleManager : MonoBehaviour
         {
             EventMessenger.TriggerEvent("SetComplete" + puzzleName);
         }
+    }
+    public static void AddPuzzle(string world, string name)
+    {
+        completedDict[world].Add(name, false);
     }
     public static void CompletePuzzle(string world, string name)
     {
