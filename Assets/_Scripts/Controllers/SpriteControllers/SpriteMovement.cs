@@ -42,6 +42,14 @@ public class SpriteMovement : MonoBehaviour
 
     protected Vector2 additionalForce;
     protected Vector2 additionalForceDecrement;
+    public virtual void OnEnable()
+    {
+        EventMessenger.StartListening("DisableInputControllerAction", InputControllerDisabled);
+    }
+    public virtual void OnDisable() 
+    {
+        EventMessenger.StopListening("DisableInputControllerAction", InputControllerDisabled);
+    }
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -78,6 +86,10 @@ public class SpriteMovement : MonoBehaviour
 
             additionalForce -= additionalForceDecrement;
         }
+    }
+    protected virtual void InputControllerDisabled()
+    {
+        rb.velocity = Vector2.zero;
     }
     private void MovementUpdate()
     {

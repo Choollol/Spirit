@@ -29,6 +29,15 @@ public class SpriteAnimator : MonoBehaviour
     protected bool doPlayAnimations = true;
 
     protected bool doPlayAttackAnimation = true;
+
+    public virtual void OnEnable()
+    {
+        EventMessenger.StartListening("DisableInputControllerAction", InputControllerDisabled);
+    }
+    public virtual void OnDisable()
+    {
+        EventMessenger.StopListening("DisableInputControllerAction", InputControllerDisabled);
+    }
     public virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -45,11 +54,8 @@ public class SpriteAnimator : MonoBehaviour
     {
         if (GameManager.isGameActive)
         {
-            if (inputController.canAct)
-            {
-                DirectionUpdate();
-                ActionUpdate();
-            }
+            DirectionUpdate();
+            ActionUpdate();
 
             string animation = spriteName + "_" + action;
 
@@ -58,6 +64,11 @@ public class SpriteAnimator : MonoBehaviour
                 animator.Play("Base Layer." + animation);
             }
         }
+    }
+    protected void InputControllerDisabled()
+    {
+        action = Action.Idle;
+        animator.Play(spriteName + "_" + action);
     }
     private IEnumerator PlayAttackAnimation()
     {

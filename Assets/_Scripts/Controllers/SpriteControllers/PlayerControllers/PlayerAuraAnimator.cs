@@ -9,12 +9,16 @@ public class PlayerAuraAnimator : SpriteAnimator
 
     private Collider2D[] overlapResults = new Collider2D[5];
     private ContactFilter2D contactFilter;
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         EventMessenger.StartListening("MeleeInteracted", Interacted);
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
+
         EventMessenger.StopListening("MeleeInteracted", Interacted);
     }
     public override void Start()

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
                     UnpauseGame();
                 }
             }
-            else if (isGameActive)
+            else if (isGameActive && !isInTransition)
             {
                 SceneManager.LoadSceneAsync("Pause_Menu", LoadSceneMode.Additive);
                 isMenuOpen = true;
@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator HandleSwitchWorld(string newWorld)
     {
         EventMessenger.TriggerEvent("StartTransition");
+        EventMessenger.TriggerEvent("DisableInputControllerAction");
+        isInTransition = true;
         while (PrimitiveMessenger.bools["isTransitionFading"])
         {
             yield return null;
@@ -99,6 +101,8 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+        EventMessenger.TriggerEvent("EnableInputControllerAction");
+        isInTransition = false;
         yield break;
     }
     private static void PauseGame()

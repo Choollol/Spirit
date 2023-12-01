@@ -6,12 +6,16 @@ using UnityEngine;
 public class PlayerMovement : SpriteMovement
 {
     [SerializeField] private PlayerData data;
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         EventMessenger.StartListening("UpdatePlayerData", UpdatePlayerData);
     }
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
+
         EventMessenger.StopListening("UpdatePlayerData", UpdatePlayerData);
     }
     public override void Start()

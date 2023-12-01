@@ -36,29 +36,30 @@ public class FallinkTowerBase : PuzzleComponent
 
         if (towerSiblingIndex == 0)
         {
-            GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex + 1)).gameObject.SetActive(false);
+            DisableBase(towerSiblingIndex + 1);
         }
         else if (towerSiblingIndex == tower.transform.parent.childCount - 1)
         {
-            GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex - 1)).gameObject.SetActive(false);
+            DisableBase(towerSiblingIndex - 1);
         }
         else
         {
-            GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex - 1)).gameObject.SetActive(false);
-            GetFirstActiveBase(controllerTransform.GetChild(towerSiblingIndex + 1)).gameObject.SetActive(false);
+            DisableBase(towerSiblingIndex - 1);
+            DisableBase(towerSiblingIndex + 1);
         }
         gameObject.SetActive(false);
         AudioPlayer.PlaySound("Fallink Tower Break Sound", 0.9f, 1.1f, false);
     }
-    private Transform GetFirstActiveBase(Transform tower)
+    private void DisableBase(int index)
     {
+        Transform tower = controllerTransform.GetChild(index);
         for (int i = 1; i < tower.childCount; i++)
         {
             if (tower.GetChild(i).gameObject.activeSelf)
             {
-                return tower.GetChild(i);
+                tower.GetChild(i).gameObject.SetActive(false);
+                break;
             }
         }
-        return null;
     }
 }
