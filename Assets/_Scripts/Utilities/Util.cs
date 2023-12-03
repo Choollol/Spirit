@@ -80,6 +80,10 @@ public static class Util
     {
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, opacity);
     }
+    public static void AddAlpha(this SpriteRenderer spriteRenderer, float amount)
+    {
+        spriteRenderer.color += new Color(0, 0, 0, amount);
+    }
     // Image helpers
     public static void SetAlpha(this Image image, float opacity)
     {

@@ -154,8 +154,7 @@ public class SpriteMovement : MonoBehaviour
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        float collisionTopY = collision.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2 *
-                collision.transform.localScale.y;
+        float collisionTopY = collision.gameObject.GetComponent<Collider2D>().bounds.max.y;
 
         // Grounded
         foreach (LayerMask groundLayer in groundLayers)
@@ -173,9 +172,8 @@ public class SpriteMovement : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        float collisionTopY = collision.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2 *
-                collision.transform.localScale.y;
-        
+        float collisionTopY = collision.gameObject.GetComponent<Collider2D>().bounds.max.y;
+
         // Ungrounded
         foreach (LayerMask groundLayer in groundLayers)
         {
