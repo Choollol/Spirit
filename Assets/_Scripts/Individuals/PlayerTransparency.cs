@@ -5,30 +5,12 @@ using UnityEngine;
 public class PlayerTransparency : MonoBehaviour
 {
     private static float transparentOpacity = 0.5f;
-    private static float fadeSpeed = 2f;
+    private static float fadeTime = 0.3f;
 
     private SpriteRenderer spriteRenderer;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-    private IEnumerator FadeOpaque()
-    {
-        while (spriteRenderer.color.a < 1)
-        {
-            spriteRenderer.AddAlpha(fadeSpeed * Time.deltaTime);
-            yield return null;
-        }
-        yield break;
-    }
-    private IEnumerator FadeTransparent()
-    {
-        while (spriteRenderer.color.a > transparentOpacity)
-        {
-            spriteRenderer.AddAlpha(-fadeSpeed * Time.deltaTime);
-            yield return null;
-        }
-        yield break;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -39,7 +21,7 @@ public class PlayerTransparency : MonoBehaviour
         StopAllCoroutines();
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(FadeTransparent());
+            StartCoroutine(Util.FadeAlpha(spriteRenderer, transparentOpacity, fadeTime));
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -51,7 +33,7 @@ public class PlayerTransparency : MonoBehaviour
         StopAllCoroutines();
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(FadeOpaque());
+            StartCoroutine(Util.FadeAlpha(spriteRenderer, 1, fadeTime));
         }
     }
 }

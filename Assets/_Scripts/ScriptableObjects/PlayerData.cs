@@ -10,4 +10,6 @@ public class PlayerData : ScriptableObject
     public float extraJumpForce;
     public float extraSpeed;
     public int extraJumps;
+    public int level;
+    public float exp;
 }

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzleComponent : MonoBehaviour, IInteractable
+public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInteractable
 {
+    protected new Collider2D collider;
+
     [SerializeField] protected int parentDepth;
     //[SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
 
@@ -21,6 +23,8 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
         {
             controllerTransform = controllerTransform.parent;
         }
+
+        collider = GetComponent<Collider2D>();
     }
     public virtual void OnEnable()
     {
@@ -41,6 +45,10 @@ public class PuzzleComponent : MonoBehaviour, IInteractable
     public virtual void Complete()
     {
         isCompleted = true;
+        if (collider)
+        {
+            collider.enabled = false;
+        }
     }
     public virtual void ResetPuzzle()
     {

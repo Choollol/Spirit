@@ -44,6 +44,8 @@ public class SaveManager : MonoBehaviour
         data.playerExtraJumpForce = playerData.extraJumpForce;
         data.playerExtraSpeed = playerData.extraSpeed;
         data.playerExtraJumps = playerData.extraJumps;
+        data.playerLevel = playerData.level;
+        data.playerExp = playerData.exp;
 
         data.controlNames = new List<string>();
         data.controlButtons = new List<string>();
@@ -87,6 +89,8 @@ public class SaveManager : MonoBehaviour
         playerData.extraJumpForce = data.playerExtraJumpForce;
         playerData.extraSpeed = data.playerExtraSpeed;
         playerData.extraJumps = data.playerExtraJumps;
+        playerData.level = data.playerLevel;
+        playerData.exp = data.playerExp;
         EventMessenger.TriggerEvent("UpdatePlayerData");
 
         string[] worlds = Enum.GetNames(typeof(GameManager.World));

@@ -17,3 +17,5 @@ MonoBehaviour:
   extraJumpForce: 0
   extraSpeed: 0
   extraJumps: 0
+  level: 0
+  exp: 0
