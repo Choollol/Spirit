@@ -52,6 +52,10 @@ public class FallinkTowerBase : PuzzleComponent
     }
     private void DisableBase(int index)
     {
+        if (controllerTransform.childCount <= index)
+        {
+            return;
+        }
         Transform tower = controllerTransform.GetChild(index);
         for (int i = 1; i < tower.childCount; i++)
         {

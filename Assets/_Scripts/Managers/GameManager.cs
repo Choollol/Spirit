@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public enum World
     {
-        Test, Test2
+        Forest, Test2
     }
 
     private static GameManager instance;
@@ -67,13 +67,13 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {
-            if (currentWorld == World.Test)
+            if (currentWorld == World.Forest)
             {
                 SwitchWorld("Test2");
             }
             else
             {
-                SwitchWorld("Test");
+                SwitchWorld("Forest");
             }
         }
     }

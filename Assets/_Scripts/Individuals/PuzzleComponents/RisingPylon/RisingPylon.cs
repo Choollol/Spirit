@@ -70,16 +70,16 @@ public class RisingPylon : PuzzleComponent
             return;
         }
 
+        if (linkOffset != 0)
+        {
+            link.Toggle();
+        }
         Toggle();
 
         EventMessenger.TriggerEvent("Check" + transform.parent.name);
     }
     public void Toggle()
     {
-        if (linkOffset != 0)
-        {
-            link.Toggle();
-        }
         if (isRisen)
         {
             isRisen = false;

@@ -5,11 +5,14 @@ using UnityEngine;
 public class Collectible : MonoBehaviour, IMeleeInteractable
 {
     private bool isCompleted = false;
-    private void Complete()
+    private void OnEnable()
     {
-        isCompleted = true;
-        gameObject.SetActive(false);
+        EventMessenger.StartListening("SetComplete" + name, Complete);
     }
+    private void OnDisable()
+    {
+        EventMessenger.StopListening("SetComplete" + name, Complete);
+    }   
     public void MeleeInteract()
     {
         if (isCompleted)
@@ -17,7 +20,14 @@ public class Collectible : MonoBehaviour, IMeleeInteractable
             return;
         }
         Complete();
+        PuzzleManager.CompletePuzzle(gameObject.scene.name, name);
         //AudioPlayer.PlaySound("Collectible Collected Sound");
+    }
+    private void Complete()
+    {
+        isCompleted = true;
+        gameObject.SetActive(false);
+        PuzzleManager.CompletePuzzle(gameObject.scene.name, name);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

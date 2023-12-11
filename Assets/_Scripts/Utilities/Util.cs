@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 public static class Util
 {
@@ -103,6 +103,25 @@ public static class Util
     public static void SetAlpha(this Image image, float opacity)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, opacity);
+    }
+    // Tilemap helpers
+    public static void SetAlpha(this Tilemap tilemap, float opacity)
+    {
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, opacity);
+    }
+    public static IEnumerator<Tilemap> FadeAlpha(Tilemap tilemap, float targetOpacity, float duration)
+    {
+        if (tilemap.color.a == targetOpacity) { yield break; }
+        float currentTime = 0;
+        float start = tilemap.color.a;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            tilemap.SetAlpha(Mathf.Lerp(start, targetOpacity, currentTime / duration));
+            yield return null;
+        }
+        tilemap.SetAlpha(targetOpacity);
+        yield break;
     }
     // Vector helpers
     public static Vector3Int ToVector3Int(Vector3 vector3)
