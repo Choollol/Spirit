@@ -25,8 +25,6 @@ public class InputManager : MonoBehaviour
     private List<string> controlsText = new List<string>();
 
     [SerializeField] private ScriptablePrimitive controlToEditData; // bools: doSwitch, isAlt. strings: name, keyCodeString
-
-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -50,6 +48,7 @@ public class InputManager : MonoBehaviour
                 Util.ToKeyCode(altButtons[i])
             };
             controls.Add(names[i], new List<KeyCode>() { Util.ToKeyCode(buttons[i]), Util.ToKeyCode(altButtons[i]) });
+            PrimitiveMessenger.strings[names[i]] = controls[names[i]][0].ToString();
         }
     }
     public void SwitchControl(string name, string button, bool isAlt)
@@ -73,7 +72,9 @@ public class InputManager : MonoBehaviour
         }
         controlToEditData.bools[0] = false;
         string controlType = isAlt ? "AltButton" : "Button";
+        PrimitiveMessenger.strings[name] = controls[name][0].ToString();
         EventMessenger.TriggerEvent("UpdateControl" + name + controlType);
+        EventMessenger.TriggerEvent("ControlsUpdated");
     }
     public static bool GetButtonDown(string name)
     {

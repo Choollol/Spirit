@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public static class Util
 {
@@ -123,6 +124,58 @@ public static class Util
         tilemap.SetAlpha(targetOpacity);
         yield break;
     }
+    // Camera helpers
+    public static IEnumerator<Camera> FadeColor(Camera camera, Color targetColor, float duration)
+    {
+        if (camera.backgroundColor == targetColor) { yield break; }
+        float currentTime = 0;
+        Color start = camera.backgroundColor;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            camera.backgroundColor = Color.Lerp(start, targetColor, currentTime / duration);
+            yield return null;
+        }
+        camera.backgroundColor = targetColor;
+        yield break;
+    }
+    // TMPro helpers
+    public static void SetAlpha(this TextMeshPro text, float opacity)
+    {
+        text.color = new Color(text.color.r, text.color.g, text.color.b, opacity);
+    }
+    public static IEnumerator<TextMeshPro> FadeAlpha(TextMeshPro text, float targetOpacity, float duration)
+    {
+        if (text.color.a == targetOpacity) { yield break; }
+        float currentTime = 0;
+        float start = text.color.a;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            text.SetAlpha(Mathf.Lerp(start, targetOpacity, currentTime / duration));
+            yield return null;
+        }
+        text.SetAlpha(targetOpacity);
+        yield break;
+    }
+    public static void SetAlpha(this TextMeshProUGUI text, float opacity)
+    {
+        text.color = new Color(text.color.r, text.color.g, text.color.b, opacity);
+    }
+    public static IEnumerator<TextMeshProUGUI> FadeAlpha(TextMeshProUGUI text, float targetOpacity, float duration)
+    {
+        if (text.color.a == targetOpacity) { yield break; }
+        float currentTime = 0;
+        float start = text.color.a;
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            text.SetAlpha(Mathf.Lerp(start, targetOpacity, currentTime / duration));
+            yield return null;
+        }
+        text.SetAlpha(targetOpacity);
+        yield break;
+    }
     // Vector helpers
     public static Vector3Int ToVector3Int(Vector3 vector3)
     {
@@ -170,10 +223,32 @@ public static class Util
         }
         return finalText;
     }
-    
     public static KeyCode ToKeyCode(string s)
     {
         return (KeyCode)Enum.Parse(typeof(KeyCode), s, true);
     }
-    
+    public static string ReplaceControls(string text, List<string> controlNames = null)
+    {
+        string finalText = "";
+        List<int> startIndices = new List<int>();
+        List<int> endIndices = new List<int>();
+        for (int i = 0; i < text.Length; i++)
+        {
+            if (text[i] == '[')
+            {
+                startIndices.Add(i + 1);
+            }
+            else if (text[i] == ']')
+            {
+                startIndices.Add(i - 1);
+            }
+        }
+        for (int i = 0; i < startIndices.Count; i++)
+        {
+            finalText = text[0..startIndices.Count] +
+                PrimitiveMessenger.strings[controlNames[i]] +
+                text[(endIndices[i] + 1)..text.Length];
+        }
+        return finalText;
+    }
 }
