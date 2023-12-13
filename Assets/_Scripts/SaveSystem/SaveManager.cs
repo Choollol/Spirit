@@ -9,8 +9,8 @@ public class SaveManager : MonoBehaviour
 
     private SaveData data = new SaveData();
 
-    private string characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,[]{}:\". ";
-    private string encryptionKey = "`[/';.,:|@mzlapqnxksowbcjdievhfurgtyMZLAPQNXKSOWBCJDIEVHFURGTY-=*%!^&$ ";
+    private string characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,[](){}:\". ";
+    private string encryptionKey = "`[/';.,:|@()mzlapqnxksowbcjdievhfurgtyMZLAPQNXKSOWBCJDIEVHFURGTY-=*%!^&$ ";
 
     private int saveInterval = 180;
 

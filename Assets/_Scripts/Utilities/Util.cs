@@ -214,7 +214,7 @@ public static class Util
         {
             if (i == 0)
             {
-                finalText += Char.ToLower(text[0]);
+                finalText += char.ToLower(text[0]);
             }
             else if (text[i] != ' ')
             {
@@ -227,27 +227,34 @@ public static class Util
     {
         return (KeyCode)Enum.Parse(typeof(KeyCode), s, true);
     }
-    public static string ReplaceControls(string text, List<string> controlNames = null)
+    public static string ReplaceControls(string text, List<string> controlNames)
     {
-        string finalText = "";
+        string finalText = text;
         List<int> startIndices = new List<int>();
         List<int> endIndices = new List<int>();
+        int controlsAmount = 0;
         for (int i = 0; i < text.Length; i++)
         {
             if (text[i] == '[')
             {
                 startIndices.Add(i + 1);
+                controlsAmount++;
             }
             else if (text[i] == ']')
             {
-                startIndices.Add(i - 1);
+                endIndices.Add(i);
             }
         }
-        for (int i = 0; i < startIndices.Count; i++)
+        if (controlNames.Count == 0)
+        { 
+            for (int i = 0; i < startIndices.Count; i++)
+            {
+                controlNames.Add(text[startIndices[i]..endIndices[i]]);
+            }
+        }
+        for (int i = 0; i < controlsAmount; i++)
         {
-            finalText = text[0..startIndices.Count] +
-                PrimitiveMessenger.strings[controlNames[i]] +
-                text[(endIndices[i] + 1)..text.Length];
+            finalText = finalText.Replace('[' + controlNames[i] + ']', '[' + PrimitiveMessenger.strings[controlNames[i]] + ']');
         }
         return finalText;
     }

@@ -174,3 +174,4 @@ MonoBehaviour:
   lifeTime: 1
   tagsToIgnore:
   - Player
+  collisionParticle: {fileID: 9217515043290874295, guid: f467e20cbf797174e9d9cab8db96df12, type: 3}

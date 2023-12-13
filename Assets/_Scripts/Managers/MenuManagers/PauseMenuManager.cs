@@ -20,6 +20,8 @@ public class PauseMenuManager : MenuManager
 
     private GameObject controlButtonsTarget;
 
+    [SerializeField] private PlayerData playerData;
+    [SerializeField] private ScriptablePrimitive playerExpRequirements;
     public override void Awake()
     {
         base.Awake();
@@ -44,6 +46,8 @@ public class PauseMenuManager : MenuManager
         {
             controlButtonImages.Add(objectDict["controlButtons"].transform.GetChild(i).GetComponent<Image>());
         }
+
+        objectDict["levelText"].GetComponent<TextMeshProUGUI>().text = "Level: " + playerData.level;
 
         EventMessenger.TriggerEvent("UpdateVolumeSliders");
     }

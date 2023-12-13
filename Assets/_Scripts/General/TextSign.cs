@@ -13,6 +13,15 @@ public class TextSign : MonoBehaviour
     private List<int> endIndices = new List<int>();
 
     private List<string> controlNames = new List<string>();
+
+    private string originalText;
+    private void Awake()
+    {
+        text = transform.GetChild(0).GetComponent<TextMeshPro>();
+        text.SetAlpha(0);
+
+        originalText = text.text;
+    }
     private void OnEnable()
     {
         EventMessenger.StartListening("ControlsUpdated", UpdateControls);
@@ -21,32 +30,10 @@ public class TextSign : MonoBehaviour
     {
         EventMessenger.StopListening("ControlsUpdated", UpdateControls);
     }
-    void Start()
-    {
-        text = transform.GetChild(0).GetComponent<TextMeshPro>();
-        text.SetAlpha(0);
-
-        for (int i = 0; i < text.text.Length; i++)
-        {
-            if (text.text[i] == '[')
-            {
-                startIndices.Add(i);
-            }
-            else if (text.text[i] == ']')
-            {
-                startIndices.Add(i);
-            }
-        }
-        UpdateControls();
-    }
     private void UpdateControls()
     {
-        for (int i = 0; i < startIndices.Count; i++)
-        {
-            text.text = text.text[0..startIndices.Count] +
-                InputManager.Controls[text.text[(startIndices[i] + 1)..endIndices[i]]][0] +
-                text.text[(endIndices[i] + 1)..text.text.Length];
-        }
+        text.text = originalText;
+        text.text = Util.ReplaceControls(text.text, controlNames);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

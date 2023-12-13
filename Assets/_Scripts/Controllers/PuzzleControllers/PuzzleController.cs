@@ -14,6 +14,8 @@ public class PuzzleController : MonoBehaviour
 
     protected int boolsToCheck;
 
+    [SerializeField] protected float expToGive;
+
     //[SerializeField] protected GameObjectMessenger currentPuzzleMessenger;
     public virtual void OnEnable()
     {
@@ -82,6 +84,7 @@ public class PuzzleController : MonoBehaviour
             }
         }
         Complete();
+        PrimitiveMessenger.floats["expToGive"] = expToGive;
         EventMessenger.TriggerEvent("PuzzleCompleted");
         EventMessenger.TriggerEvent("CompleteComponents" + name);
         AudioPlayer.PlaySound("Complete Sound");

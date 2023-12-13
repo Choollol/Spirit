@@ -50,6 +50,7 @@ public class InputManager : MonoBehaviour
             controls.Add(names[i], new List<KeyCode>() { Util.ToKeyCode(buttons[i]), Util.ToKeyCode(altButtons[i]) });
             PrimitiveMessenger.strings[names[i]] = controls[names[i]][0].ToString();
         }
+        EventMessenger.TriggerEvent("ControlsUpdated");
     }
     public void SwitchControl(string name, string button, bool isAlt)
     {
@@ -94,6 +95,9 @@ public class InputManager : MonoBehaviour
     }
     public void LoadDefaultControls()
     {
+        List<string> names = new List<string>();
+        List<string> buttons = new List<string>();
+        List<string> altButtons = new List<string>();
         string[] temp = controlsFile.text.Trim().Split('*');
         for (int i = 0; i < temp.Length; i++)
         {
@@ -117,8 +121,12 @@ public class InputManager : MonoBehaviour
                 keysList.Add(Util.ToKeyCode(parts[2]));
             }
 
-            controls.Add(parts[0].Trim(), keysList);
+            //controls.Add(parts[0].Trim(), keysList);
+            names.Add(parts[0].Trim());
+            buttons.Add(keysList[0].ToString());
+            altButtons.Add(keysList[1].ToString());
         }
+        SetControls(names, buttons, altButtons);
     }
     private void OnGUI()
     {
