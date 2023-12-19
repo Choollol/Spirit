@@ -77,6 +77,14 @@ public static class Util
     {
         rectTransform.localPosition = new Vector3(rectTransform.localPosition.x, y, rectTransform.localPosition.z);
     }
+    public static void SetWidth(this RectTransform rectTransform, float width)
+    {
+        rectTransform.sizeDelta = new Vector2(width, rectTransform.sizeDelta.y);
+    }
+    public static void SetHeight(this RectTransform rectTransform, float height)
+    {
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, height);
+    }
     // SpriteRenderer helpers
     public static void SetAlpha(this SpriteRenderer spriteRenderer, float opacity)
     {

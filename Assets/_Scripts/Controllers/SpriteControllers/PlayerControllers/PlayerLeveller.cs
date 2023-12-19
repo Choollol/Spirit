@@ -7,6 +7,8 @@ public class PlayerLeveller : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private ScriptablePrimitive expRequirements;
 
+    [SerializeField] private GameObject expGainedText;
+
     private int level;
     private float exp;
     private void OnEnable()
@@ -24,6 +26,8 @@ public class PlayerLeveller : MonoBehaviour
 
         level = 0;
         exp = 0;
+        playerData.level = level;
+        playerData.exp = exp;
     }
     private void GainExp()
     {
@@ -33,14 +37,14 @@ public class PlayerLeveller : MonoBehaviour
             LevelUp();
         }
         playerData.exp = exp;
-        Debug.Log("exp gained " + PrimitiveMessenger.floats["expToGive"]);
+        GameObject expText = Instantiate(expGainedText, transform.position + new Vector3(0, 0.2f), Quaternion.identity);
+        expText.GetComponent<RisingText>().UpdateText("+" + PrimitiveMessenger.floats["expToGive"] + " exp");
     }
     private void LevelUp()
     {
         exp -= expRequirements.floats[level];
         level++;
         playerData.level = level;
-        Debug.Log("level up ;; exp " + exp);
         //AudioPlayer.PlaySound("Player Level Up Sound");
         switch (level)
         {

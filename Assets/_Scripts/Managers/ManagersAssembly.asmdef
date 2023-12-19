@@ -5,7 +5,8 @@
         "MessengersAssembly",
         "UtilitiesAssembly",
         "ScriptableObjectsAssembly",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "IndividualsAssembly"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

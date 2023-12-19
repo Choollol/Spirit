@@ -29,7 +29,12 @@ public class FallinkTowerBase : PuzzleComponent
 
         tower.DecrementBaseCount();
     }
+    protected override void SetComplete()
+    {
+        base.SetComplete();
 
+        transform.gameObject.SetActive(false);
+    }
     public override void RangedInteract()
     {
         base.RangedInteract();

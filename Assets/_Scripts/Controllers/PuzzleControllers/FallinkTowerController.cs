@@ -6,12 +6,9 @@ public class FallinkTowerController : PuzzleController
 {
     // Messenger bools = does each tower have no bases
 
-    private static float spacing = 0.2f;
+    //private static float spacing = 0.2f;
 
-    [SerializeField] private GameObject basePrefab;
-    [SerializeField] private GameObject topPrefab;
-    [SerializeField] private List<int> baseCounts;
-    public override void Start()
+    /*public override void Start()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -38,5 +35,5 @@ public class FallinkTowerController : PuzzleController
                 transform.GetChild(i).GetChild(j).gameObject.SetActive(false);
             }
         }
-    }
+    }*/
 }

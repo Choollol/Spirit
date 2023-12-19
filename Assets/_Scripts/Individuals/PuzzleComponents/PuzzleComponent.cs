@@ -15,7 +15,10 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
     protected bool isMeleeInteractable;
     protected bool isRangedInteractable;
 
+    protected bool doStopInteraction = true;
+
     protected bool canInteract = true;
+
     public virtual void Awake()
     {
         controllerTransform = transform.parent;
@@ -61,7 +64,10 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
             return;
         }
         SetCurrentPuzzle();
-        EventMessenger.TriggerEvent("MeleeInteracted");
+        if (doStopInteraction)
+        {
+            EventMessenger.TriggerEvent("MeleeInteracted");
+        }
     }
     public virtual void RangedInteract()
     {
@@ -70,7 +76,10 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
             return;
         }
         SetCurrentPuzzle();
-        EventMessenger.TriggerEvent("RangedInteracted");
+        if (doStopInteraction)
+        {
+            EventMessenger.TriggerEvent("RangedInteracted");
+        }
     }
     protected void SetCurrentPuzzle()
     {
@@ -108,7 +117,10 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
     {
         if (collision.gameObject.CompareTag("Melee Interacter") && isMeleeInteractable)
         {
-            EventMessenger.TriggerEvent("MeleeInteracted");
+            if (doStopInteraction)
+            {
+                EventMessenger.TriggerEvent("MeleeInteracted");
+            }
         }
     }
 }

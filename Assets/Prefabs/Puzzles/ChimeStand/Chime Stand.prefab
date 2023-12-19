@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8842098085490839958
+--- !u!1 &6386001461419094848
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4684585912992776971}
-  - component: {fileID: 3258856373067163356}
-  - component: {fileID: 3610180576412463080}
-  - component: {fileID: 1818305586521674158}
-  - component: {fileID: 3681856038286011658}
+  - component: {fileID: 3560358972219073340}
+  - component: {fileID: 1994901527929453500}
+  - component: {fileID: 1079752842602720310}
+  - component: {fileID: 3764958734917286016}
   m_Layer: 8
-  m_Name: Fallink Tower Top
+  m_Name: Chime Stand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4684585912992776971
+--- !u!4 &3560358972219073340
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842098085490839958}
+  m_GameObject: {fileID: 6386001461419094848}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3258856373067163356
+--- !u!212 &1994901527929453500
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842098085490839958}
+  m_GameObject: {fileID: 6386001461419094848}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,52 +74,25 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 14b18c49c2ce7df42a4b463c29032488, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 0be1ebea907fa4e42934cf5202546c40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.17, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3610180576412463080
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842098085490839958}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
---- !u!61 &1818305586521674158
+--- !u!61 &1079752842602720310
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842098085490839958}
+  m_GameObject: {fileID: 6386001461419094848}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -143,32 +115,40 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.1, y: 0.1}
-    newSize: {x: 0.1, y: 0.1}
+    oldSize: {x: 0.17, y: 0.16}
+    newSize: {x: 0.17, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.09, y: 0.09}
+  m_Size: {x: 0.17, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &3681856038286011658
+--- !u!114 &3764958734917286016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8842098085490839958}
+  m_GameObject: {fileID: 6386001461419094848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58667591a32489c43995bf8440dc790c, type: 3}
+  m_Script: {fileID: 11500000, guid: ea7a8df745ae8fc45a3ecd1cd7d6c5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallinkTowerMessenger: {fileID: 11400000, guid: 6186c65c738e8734db420b59779e47e4, type: 2}
+  parentDepth: 0
+  textures:
+  - {fileID: 21300000, guid: a5082ca2bc119514e894ea1335f99afe, type: 3}
+  - {fileID: 21300000, guid: fd2ae77dc2f41354d880f1bd73a58892, type: 3}
+  - {fileID: 21300000, guid: f9ad799120b925049b96fa54148f81e4, type: 3}
+  - {fileID: 21300000, guid: 1cb081f50ed6b754cb74adaa938a81ea, type: 3}
+  - {fileID: 21300000, guid: c678f23acccf57e499313da6f6b054ee, type: 3}
+  - {fileID: 21300000, guid: 0be1ebea907fa4e42934cf5202546c40, type: 3}
+  startingChimeCount: 5
