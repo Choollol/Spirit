@@ -10,8 +10,12 @@ public class FallinkTowerHolder : MonoBehaviour
     [SerializeField] private GameObject topPrefab;
     [SerializeField] private int startingBaseCount;
     private int baseCount = 0;
+
+    private int siblingIndex;
     private void Awake()
     {
+        siblingIndex = transform.GetSiblingIndex();
+
         transform.GetChild(0).SetLocalPosY(startingBaseCount * spacing + spacing / 2);
         float yPos = spacing / 2;
         for (int i = 0; i < startingBaseCount; i++)
@@ -20,6 +24,9 @@ public class FallinkTowerHolder : MonoBehaviour
             towerBase.transform.SetLocalPosY(yPos);
             yPos += spacing;
         }
+
+        // Whether holder at index has no bases
+        PrimitiveMessenger.bools[transform.parent.name + siblingIndex] = false;
     }
     public void IncrementBaseCount()
     {
@@ -31,7 +38,24 @@ public class FallinkTowerHolder : MonoBehaviour
         if (baseCount <= 0)
         {
             //fallinkTowerMessenger.bools[transform.GetSiblingIndex()] = true;
-            PrimitiveMessenger.bools[transform.parent.name + transform.GetSiblingIndex()] = true;
+            PrimitiveMessenger.bools[transform.parent.name + siblingIndex] = true;
         }
+        if (transform.parent.childCount == 1)
+        {
+            return;
+        }
+    }
+    public void ResetPuzzle()
+    {
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
+        StartCoroutine(HandleReset());
+    }
+    private IEnumerator HandleReset()
+    {
+        yield return null;
+        EventMessenger.TriggerEvent("Reset");
     }
 }

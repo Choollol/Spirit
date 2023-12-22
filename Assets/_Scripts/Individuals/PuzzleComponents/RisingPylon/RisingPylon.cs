@@ -34,6 +34,11 @@ public class RisingPylon : PuzzleComponent
 
         ResetPuzzle();
     }
+    protected override void ResetMessenger()
+    {
+        base.ResetMessenger();
+        PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = isRisen;
+    }
     protected override void SetComplete()
     {
         base.SetComplete();
@@ -58,7 +63,6 @@ public class RisingPylon : PuzzleComponent
         //risingPylonMessenger.bools[transform.GetSiblingIndex()] = isRisen;
         //risingPylonMessenger.floats[0] = 0;
         PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = isRisen;
-        PrimitiveMessenger.floats[controllerTransform.name] = 0;
         StopAllCoroutines();
     }
     public override void MeleeInteract()

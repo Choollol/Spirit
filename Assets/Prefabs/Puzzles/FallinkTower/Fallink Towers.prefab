@@ -48,10 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCompleted: 0
-  doResetOnCheckFail: 1
-  basePrefab: {fileID: 1156251219657590483, guid: 2b1760456b752a847bfa9269bfd88088, type: 3}
-  topPrefab: {fileID: 8842098085490839958, guid: b9b4493c2e31f6a4d8ffe0b6fba207f9, type: 3}
-  baseCounts: 030000000400000003000000
+  doResetOnCheckFail: 0
+  expToGive: 0
 --- !u!1001 &598749517041685948
 PrefabInstance:
   m_ObjectHideFlags: 0

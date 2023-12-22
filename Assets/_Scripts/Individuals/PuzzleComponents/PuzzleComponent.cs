@@ -34,12 +34,14 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
         EventMessenger.StartListening("Reset" + controllerTransform.name, ResetPuzzle);
         EventMessenger.StartListening("CompleteComponents" + controllerTransform.name, Complete);
         EventMessenger.StartListening("SetComplete" + controllerTransform.name, SetComplete);
+        EventMessenger.StartListening("ResetMessenger" + controllerTransform.name, ResetMessenger);
     }
     public virtual void OnDisable()
     {
         EventMessenger.StopListening("Reset" + controllerTransform.name, ResetPuzzle);
         EventMessenger.StopListening("CompleteComponents" + controllerTransform.name, Complete);
         EventMessenger.StopListening("SetComplete" + controllerTransform.name, SetComplete);
+        EventMessenger.StopListening("ResetMessenger" + controllerTransform.name, ResetMessenger);
     }
     protected virtual void SetComplete()
     {
@@ -52,6 +54,10 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
         {
             collider.enabled = false;
         }
+    }
+    protected virtual void ResetMessenger()
+    {
+
     }
     public virtual void ResetPuzzle()
     {

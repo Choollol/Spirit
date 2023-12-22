@@ -31,7 +31,7 @@ public class PuzzleController : MonoBehaviour
         EventMessenger.StopListening("CurrentPuzzleChanged", SetCurrentPuzzle);
         EventMessenger.StopListening("SetComplete" + name, SetComplete);
     }
-    public virtual void Start()
+    public virtual void Awake()
     {
         foreach (Transform t in transform.GetChildTransforms())
         {
@@ -47,6 +47,23 @@ public class PuzzleController : MonoBehaviour
             PrimitiveMessenger.bools[name + i] = false;
         }
         boolsToCheck = transform.childCount;
+    }
+    public virtual void Start()
+    {
+        /*foreach (Transform t in transform.GetChildTransforms())
+        {
+            transforms.Add(t);
+            transformData.Add(new TransformData(t));
+            if (t.GetComponent<Rigidbody2D>() != null)
+            {
+                rigidbodies.Add(t.GetComponent<Rigidbody2D>());
+            }
+        }
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            PrimitiveMessenger.bools[name + i] = false;
+        }
+        boolsToCheck = transform.childCount;*/
     }
     public virtual void SetComplete()
     {
@@ -106,6 +123,7 @@ public class PuzzleController : MonoBehaviour
             //messenger.bools[i] = false;
             PrimitiveMessenger.bools[name + i] = false;
         }
+        EventMessenger.TriggerEvent("ResetMessenger" + name);
     }
     protected virtual void ResetPuzzle()
     {

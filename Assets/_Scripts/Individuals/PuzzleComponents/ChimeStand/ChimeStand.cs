@@ -29,7 +29,7 @@ public class ChimeStand : PuzzleComponent
             PrimitiveMessenger.floats[controllerTransform.name] = 1;
             PrimitiveMessenger.bools[controllerTransform.name + transform.GetSiblingIndex()] = true;
         }
-        AudioPlayer.PlaySound("Chime Stand Sound", 0.95f, 1.05f);
+        AudioPlayer.PlaySound("Chime Stand Sound", 0.9f, 1.1f, true);
     }
     public override void ResetPuzzle()
     {

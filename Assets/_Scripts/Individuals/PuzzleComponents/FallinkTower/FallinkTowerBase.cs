@@ -57,18 +57,21 @@ public class FallinkTowerBase : PuzzleComponent
     }
     private void DisableBase(int index)
     {
-        if (controllerTransform.childCount <= index)
+        if (controllerTransform.childCount <= index || index < 0)
         {
             return;
         }
-        Transform tower = controllerTransform.GetChild(index);
-        for (int i = 1; i < tower.childCount; i++)
         {
-            if (tower.GetChild(i).gameObject.activeSelf)
+            Transform tower = controllerTransform.GetChild(index);
+            for (int i = 1; i < tower.childCount; i++)
             {
-                tower.GetChild(i).gameObject.SetActive(false);
-                break;
+                if (tower.GetChild(i).gameObject.activeSelf)
+                {
+                    tower.GetChild(i).gameObject.SetActive(false);
+                    return;
+                }
             }
         }
+        tower.ResetPuzzle();
     }
 }
