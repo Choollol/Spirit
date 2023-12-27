@@ -6,6 +6,10 @@ public class PlayerProjectile : Projectile
 {
     private void OnDestroy()
     {
+        if (!gameObject.scene.isLoaded)
+        {
+            return;
+        }
         EventMessenger.TriggerEvent("PlayerProjectileDestroyed");
     }
 }

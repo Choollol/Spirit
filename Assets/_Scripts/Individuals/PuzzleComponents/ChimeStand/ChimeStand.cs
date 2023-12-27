@@ -24,6 +24,10 @@ public class ChimeStand : PuzzleComponent
         base.RangedInteract();
 
         UpdateChimeCount(chimeCount - 1);
+        if (chimeCount < 0)
+        {
+            return;
+        }
         if (chimeCount == 0)
         {
             PrimitiveMessenger.floats[controllerTransform.name] = 1;

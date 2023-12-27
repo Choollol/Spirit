@@ -55,10 +55,7 @@ public class PuzzleComponent : MonoBehaviour, IMeleeInteractable, IRangedInterac
             collider.enabled = false;
         }
     }
-    protected virtual void ResetMessenger()
-    {
-
-    }
+    protected virtual void ResetMessenger() { }
     public virtual void ResetPuzzle()
     {
 

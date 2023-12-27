@@ -21,17 +21,17 @@ public class PuzzleController : MonoBehaviour
     {
         EventMessenger.StartListening("Reset", ResetPuzzle);
         EventMessenger.StartListening("Check" + name, CheckForCompletion);
-        EventMessenger.StartListening("CurrentPuzzleChanged", SetCurrentPuzzle);
+        //EventMessenger.StartListening("CurrentPuzzleChanged", SetCurrentPuzzle);
         EventMessenger.StartListening("SetComplete" + name, SetComplete);
     }
     public virtual void OnDisable()
     {
         EventMessenger.StopListening("Reset", ResetPuzzle);
         EventMessenger.StopListening("Check" + name, CheckForCompletion);
-        EventMessenger.StopListening("CurrentPuzzleChanged", SetCurrentPuzzle);
+        //EventMessenger.StopListening("CurrentPuzzleChanged", SetCurrentPuzzle);
         EventMessenger.StopListening("SetComplete" + name, SetComplete);
     }
-    public virtual void Awake()
+    public virtual void Start()
     {
         foreach (Transform t in transform.GetChildTransforms())
         {
@@ -47,23 +47,7 @@ public class PuzzleController : MonoBehaviour
             PrimitiveMessenger.bools[name + i] = false;
         }
         boolsToCheck = transform.childCount;
-    }
-    public virtual void Start()
-    {
-        /*foreach (Transform t in transform.GetChildTransforms())
-        {
-            transforms.Add(t);
-            transformData.Add(new TransformData(t));
-            if (t.GetComponent<Rigidbody2D>() != null)
-            {
-                rigidbodies.Add(t.GetComponent<Rigidbody2D>());
-            }
-        }
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            PrimitiveMessenger.bools[name + i] = false;
-        }
-        boolsToCheck = transform.childCount;*/
+        ResetMessenger();
     }
     public virtual void SetComplete()
     {
@@ -79,10 +63,10 @@ public class PuzzleController : MonoBehaviour
         //currentPuzzleMessenger.objects[0] = null;
         ObjectMessenger.SetGameObject("currentPuzzle", null);
     }
-    protected virtual void SetCurrentPuzzle()
+    /*protected virtual void SetCurrentPuzzle()
     {
-        ResetMessenger();
-    }
+        //ResetMessenger();
+    }*/
     protected virtual void CheckForCompletion()
     {
         if (/*currentPuzzleMessenger.objects[0]*/ ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)

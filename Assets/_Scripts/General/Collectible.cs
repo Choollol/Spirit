@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour, IMeleeInteractable
 {
+    [SerializeField] private GameObject collectedParticle;
+
+    [SerializeField] protected float expToGive;
+
     private bool isCompleted = false;
     private void OnEnable()
     {
@@ -15,19 +19,22 @@ public class Collectible : MonoBehaviour, IMeleeInteractable
     }   
     public void MeleeInteract()
     {
+        EventMessenger.TriggerEvent("MeleeInteracted");
         if (isCompleted)
         {
             return;
         }
         Complete();
         PuzzleManager.CompletePuzzle(gameObject.scene.name, name);
-        //AudioPlayer.PlaySound("Collectible Collected Sound");
+        Instantiate(collectedParticle, transform.position, Quaternion.identity);
+        AudioPlayer.PlaySound("Collectible Collected Sound");
+        PrimitiveMessenger.floats["expToGive"] = expToGive;
+        EventMessenger.TriggerEvent("PuzzleCompleted");
     }
     private void Complete()
     {
         isCompleted = true;
         gameObject.SetActive(false);
-        PuzzleManager.CompletePuzzle(gameObject.scene.name, name);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

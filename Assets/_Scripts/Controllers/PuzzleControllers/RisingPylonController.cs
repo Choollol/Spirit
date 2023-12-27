@@ -5,7 +5,6 @@ using UnityEngine;
 public class RisingPylonController : PuzzleController
 {
     // Messenger bools = does each tower have no bases
-
     protected override void ResetMessenger()
     {
         base.ResetMessenger();

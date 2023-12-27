@@ -105,6 +105,8 @@ public class SaveManager : MonoBehaviour
             }
         }
 
+        EventMessenger.TriggerEvent("GameLoaded");
+
         isFirstTime = false;
     }
     private void WriteData()

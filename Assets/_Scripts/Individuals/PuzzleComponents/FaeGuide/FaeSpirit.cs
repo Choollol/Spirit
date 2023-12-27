@@ -13,12 +13,16 @@ public class FaeSpirit : PuzzleComponent
 
     private Vector3 targetPos;
     private float initialDistance;
+
+    ContactFilter2D contactFilter = new ContactFilter2D();
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         targetPos = transform.parent.GetChild(1).position;
         initialDistance = Vector2.Distance(targetPos, transform.position);
+
+        contactFilter.useTriggers = false;
 
         SetOpacity();
     }
@@ -36,7 +40,8 @@ public class FaeSpirit : PuzzleComponent
     }
     public bool Move(float pathLength, Vector3 direction)
     {
-        if (Physics2D.Raycast(transform.position, direction, pathLength))
+        RaycastHit2D[] arr = new RaycastHit2D[1];
+        if (Physics2D.Raycast(transform.position, direction, contactFilter, arr, pathLength) > 0)
         {
             AudioPlayer.PlaySound("Fae Guide Blocked Sound");
             return false;
