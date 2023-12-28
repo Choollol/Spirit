@@ -155,18 +155,17 @@ public class SpriteMovement : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Collider2D collisionCollider = collision.gameObject.GetComponent<Collider2D>();
-        float collisionTopY = collisionCollider.bounds.max.y;
-        float topOffset = 0.01f;
 
+        float comparisonPoint = collisionCollider.bounds.max.y - 0.01f;
         if (collisionCollider is CircleCollider2D)
         {
-            topOffset = 0.03f;
+            comparisonPoint = collisionCollider.bounds.center.y;
         }
 
         // Grounded
         foreach (LayerMask groundLayer in groundLayers)
         {
-            if (1 << collision.gameObject.layer == groundLayer && collisionTopY - topOffset < groundCheck.position.y && 
+            if (1 << collision.gameObject.layer == groundLayer && comparisonPoint < groundCheck.position.y && 
                 rb.velocity.y <= 0)
             {
                 isGrounded = true;
