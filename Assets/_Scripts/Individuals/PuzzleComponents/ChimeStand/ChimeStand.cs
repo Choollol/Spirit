@@ -45,6 +45,10 @@ public class ChimeStand : PuzzleComponent
     private void UpdateChimeCount(int newChimeCount)
     {
         chimeCount = newChimeCount;
+        if (chimeCount < 0)
+        {
+            return;
+        }
         spriteRenderer.sprite = textures[chimeCount];
     }
 }

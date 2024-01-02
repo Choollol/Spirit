@@ -60,7 +60,6 @@ public class PuzzleController : MonoBehaviour
         {
             return;
         }
-        //currentPuzzleMessenger.objects[0] = null;
         ObjectMessenger.SetGameObject("currentPuzzle", null);
     }
     /*protected virtual void SetCurrentPuzzle()
@@ -69,13 +68,13 @@ public class PuzzleController : MonoBehaviour
     }*/
     protected virtual void CheckForCompletion()
     {
-        if (/*currentPuzzleMessenger.objects[0]*/ ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
+        if (ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
         {
             return;
         }
         for (int i = 0; i < boolsToCheck; i++)
         {
-            if (!PrimitiveMessenger.bools[name + i])//!messenger.bools[i])
+            if (!PrimitiveMessenger.bools[name + i])
             {
                 if (doResetOnCheckFail)
                 {
@@ -104,14 +103,13 @@ public class PuzzleController : MonoBehaviour
     {
         for (int i = 0; i < boolsToCheck; i++)
         {
-            //messenger.bools[i] = false;
             PrimitiveMessenger.bools[name + i] = false;
         }
         EventMessenger.TriggerEvent("ResetMessenger" + name);
     }
     protected virtual void ResetPuzzle()
     {
-        if (/*currentPuzzleMessenger.objects[0]*/ ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
+        if (ObjectMessenger.GetGameObject("currentPuzzle") != gameObject || isCompleted)
         {
             return;
         }
