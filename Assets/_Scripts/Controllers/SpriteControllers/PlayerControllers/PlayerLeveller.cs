@@ -9,6 +9,8 @@ public class PlayerLeveller : MonoBehaviour
 
     [SerializeField] private GameObject expGainedText;
 
+    [SerializeField] private GameObject levelUpParticle;
+
     private int level;
     private float exp;
     private void OnEnable()
@@ -45,6 +47,8 @@ public class PlayerLeveller : MonoBehaviour
         exp -= expRequirements.floats[level];
         level++;
         playerData.level = level;
+        GameObject particle = Instantiate(levelUpParticle, transform);
+        particle.transform.localPosition = new Vector3(0, -0.05f);
         //AudioPlayer.PlaySound("Player Level Up Sound");
         switch (level)
         {

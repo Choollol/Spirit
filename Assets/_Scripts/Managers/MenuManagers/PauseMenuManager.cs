@@ -49,9 +49,11 @@ public class PauseMenuManager : MenuManager
 
         objectDict["levelText"].GetComponent<TextMeshProUGUI>().text = "Level: " + playerData.level;
 
+        objectDict["expText"].GetComponent<TextMeshProUGUI>().text = playerData.exp + "/" + playerExpRequirements.floats[playerData.level];
+        objectDict["expBarEnd"].GetComponent<RectTransform>().SetLocalPosX(playerData.exp / playerExpRequirements.floats[playerData.level] *
+            objectDict["expBarFill"].GetComponent<RectTransform>().sizeDelta.x);
         objectDict["expBarFill"].GetComponent<RectTransform>().SetWidth(playerData.exp / playerExpRequirements.floats[playerData.level] * 
             objectDict["expBarFill"].GetComponent<RectTransform>().sizeDelta.x);
-        objectDict["expText"].GetComponent<TextMeshProUGUI>().text = playerData.exp + "/" + playerExpRequirements.floats[playerData.level];
 
         EventMessenger.TriggerEvent("UpdateVolumeSliders");
     }
