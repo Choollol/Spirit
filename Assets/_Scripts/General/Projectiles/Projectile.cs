@@ -7,9 +7,21 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float lifeTime;
     private float counter;
 
+    [SerializeField] private float launchForce;
+
     [SerializeField] private List<string> tagsToIgnore;
 
     [SerializeField] private GameObject collisionParticle;
+
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+
+        StartCoroutine(Launch());
+    }
     void Update()
     {
         if (counter > lifeTime)
@@ -18,6 +30,17 @@ public class Projectile : MonoBehaviour
         }
 
         counter += Time.deltaTime;
+    }
+    protected virtual IEnumerator Launch()
+    {
+        yield return null;
+        Vector3 direction = Vector3.right;
+        if (spriteRenderer.flipX)
+        {
+            direction *= -1;
+        }
+        rb.AddForce(direction * launchForce, ForceMode2D.Impulse);
+        yield break;
     }
     protected virtual void Collided()
     {

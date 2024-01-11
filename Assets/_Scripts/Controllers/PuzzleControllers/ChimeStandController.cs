@@ -9,7 +9,7 @@ public class ChimeStandController : PuzzleController
     {
         base.OnEnable();
 
-        EventMessenger.StartListening("PlayerProjectileDestroyed", CheckForCompletion);
+        //EventMessenger.StartListening("PlayerProjectileDestroyed", CheckForCompletion);
     }
     public override void OnDisable()
     {
