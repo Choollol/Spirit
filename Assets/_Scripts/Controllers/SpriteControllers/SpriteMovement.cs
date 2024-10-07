@@ -13,10 +13,10 @@ public class SpriteMovement : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected InputController inputController;
+    protected Collider2D collider2d;
 
     protected static float inputControllerUpdateVelocityMin = 0.1f;
 
-    protected Transform groundCheck;
     [SerializeField] protected List<LayerMask> groundLayers;
 
     [SerializeField] protected float jumpForce;
@@ -54,8 +54,7 @@ public class SpriteMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         inputController = GetComponent<InputController>();
-
-        groundCheck = transform.GetChild(0);
+        collider2d = GetComponent<Collider2D>();
     }
 
     private void FixedUpdate()
@@ -142,7 +141,8 @@ public class SpriteMovement : MonoBehaviour
         // Variable jump height
         if (!inputController.isJumpHeld && rb.velocity.y > 0 && minJumpTimeCounter > minJumpTime && inputController.isJumping)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.96f);
+            //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.96f);
+            rb.velocity -= new Vector2(0, rb.velocity.y * 0.04f * 800 * Time.deltaTime);
 
             coyoteTimeCounter = 0;
         }
@@ -152,7 +152,33 @@ public class SpriteMovement : MonoBehaviour
             jumpTimeCounter += dt;
         }
     }
-    private void OnCollisionStay2D(Collision2D collision)
+
+    public virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+        Collider2D collisionCollider = collision.gameObject.GetComponent<Collider2D>();
+
+        float comparisonPoint = collisionCollider.bounds.max.y - 0.01f;
+        if (collisionCollider is CircleCollider2D)
+        {
+            comparisonPoint = collisionCollider.bounds.center.y;
+        }
+
+        // Grounded
+        foreach (LayerMask groundLayer in groundLayers)
+        {
+            if (1 << collision.gameObject.layer == groundLayer && comparisonPoint < collider2d.bounds.min.y &&
+                rb.velocity.y <= 0)
+            {
+                isGrounded = true;
+                extraJumpsCounter = 0;
+                inputController.isJumping = false;
+                inputController.isFalling = false;
+                inputController.isRising = false;
+            }
+        }
+    }
+
+    /*private void OnCollisionStay2D(Collision2D collision)
     {
         Collider2D collisionCollider = collision.gameObject.GetComponent<Collider2D>();
 
@@ -175,7 +201,7 @@ public class SpriteMovement : MonoBehaviour
                 inputController.isRising = false;
             }
         }
-    }
+    }*/
     private void OnCollisionExit2D(Collision2D collision)
     {
         float collisionTopY = collision.gameObject.GetComponent<Collider2D>().bounds.max.y;
@@ -183,7 +209,7 @@ public class SpriteMovement : MonoBehaviour
         // Ungrounded
         foreach (LayerMask groundLayer in groundLayers)
         {
-            if (1 << collision.gameObject.layer == groundLayer && collisionTopY < groundCheck.position.y + 0.01f)
+            if (1 << collision.gameObject.layer == groundLayer && collisionTopY < collider2d.bounds.min.y + 0.01f)
             {
                 isGrounded = false;
             }
